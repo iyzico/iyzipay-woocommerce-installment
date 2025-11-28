@@ -15,29 +15,221 @@ msgstr ""
 "X-Loco-Version: 2.6.3; wp-6.3-alpha-55617"
 
 # This file is distributed under the GNU General Public License v2 or later.
-msgid "API credentials are missing."
+msgid "MISSING_API_CREDENTIALS"
 msgstr "API kimlik bilgileri eksik."
 
-msgid "An error occurred while retrieving installment information."
+msgid "INSTALLMENT_INFO_ERROR"
 msgstr "Taksit bilgileri alınırken bir hata oluştu."
 
-msgid "Security verification failed."
-msgstr "Doğrulama hatası."
+msgid "SECURITY_VERIFICATION_FAILED"
+msgstr "Güvenlik doğrulaması başarısız."
 
-msgid "Invalid price."
-msgstr "Geçersiz tutar"
+msgid "INVALID_PRICE"
+msgstr "Geçersiz fiyat."
 
-msgid "Installment"
+msgid "INSTALLMENT"
 msgstr "Taksit"
 
-msgid "Total"
+msgid "TOTAL"
 msgstr "Toplam"
 
-msgid "Installment Options"
+msgid "INSTALLMENT_OPTIONS"
 msgstr "Taksit Seçenekleri"
 
-msgid "No installment options found."
-msgstr "Taksit seçenekleri bulunamadı."
+msgid "NO_INSTALLMENT_OPTIONS"
+msgstr "Taksit seçeneği bulunamadı."
 
-msgid "Price"
+msgid "PRICE"
 msgstr "Fiyat"
+
+msgid "API_CREDENTIALS_NOT_CONFIGURED"
+msgstr "API kimlik bilgileri yapılandırılmamış."
+
+msgid "SECURITY_CHECK_FAILED"
+msgstr "Security check failed"
+
+msgid "DYNAMIC_INSTALLMENTS_NOT_ENABLED"
+msgstr "Dynamic installments are not enabled"
+
+msgid "INVALID_PRODUCT_ID"
+msgstr "Invalid product ID"
+
+msgid "PRODUCT_NOT_FOUND"
+msgstr "Product not found"
+
+msgid "TOO_MANY_REQUESTS"
+msgstr "Too many requests. Please wait a moment."
+
+msgid "PLEASE_SELECT_OPTION"
+msgstr "Lütfen bir seçenek belirleyin."
+
+msgid "PRICE_INFO_NOT_FOUND"
+msgstr "Fiyat bilgisi bulunamadı."
+
+msgid "INSTALLMENTS_LOADING"
+msgstr "Taksit yükleniyor..."
+
+msgid "UNKNOWN_ERROR"
+msgstr "Bilinmeyen hata"
+
+msgid "ERROR_PREFIX"
+msgstr "Hata:"
+
+msgid "CONNECTION_ERROR_RETRY"
+msgstr "Bağlantı hatası. Lütfen tekrar deneyin."
+
+msgid "VALID_PRICE_NOT_SPECIFIED"
+msgstr "Geçerli bir fiyat belirtilmedi."
+
+msgid "INSTALLMENT_COUNT"
+msgstr "Taksit Sayısı"
+
+msgid "INSTALLMENT_AMOUNT"
+msgstr "Taksit Tutarı"
+
+msgid "IYZICO_INSTALLMENT_OPTIONS"
+msgstr "iyzico Taksit Seçenekleri"
+
+msgid "IYZICO_INSTALLMENT_SHORT"
+msgstr "iyzico Taksit"
+
+msgid "COPY_SUCCESS"
+msgstr "Kopyalandı!"
+
+msgid "COPY_ERROR"
+msgstr "Kopyalanamadı!"
+
+msgid "EMPTY_CREDENTIALS"
+msgstr "API Key ve Secret Key alanları boş olamaz."
+
+msgid "TESTING"
+msgstr "Test ediliyor..."
+
+msgid "CONNECTED"
+msgstr "Bağlantı Başarılı!"
+
+msgid "DISCONNECTED"
+msgstr "Bağlantı Başarısız!"
+
+msgid "CONNECTION_SUCCESS"
+msgstr "API bağlantısı başarılı."
+
+msgid "CONNECTION_ERROR"
+msgstr "API bağlantısı başarısız."
+
+msgid "CONNECTION_NOT_CONFIGURED"
+msgstr "Bağlantı Yapılandırılmadı"
+
+msgid "API_SETTINGS"
+msgstr "API Ayarları"
+
+msgid "ENVIRONMENT"
+msgstr "Ortam"
+
+msgid "TEST_SANDBOX"
+msgstr "Test (Sandbox)"
+
+msgid "LIVE"
+msgstr "Canlı (Live)"
+
+msgid "TEST_ENV_WARNING"
+msgstr "Test ortamında gerçek kartlar ile işlem yapamazsınız."
+
+msgid "API_CONNECTION_STATUS"
+msgstr "API Bağlantı Durumu"
+
+msgid "API_STATUS_DESCRIPTION"
+msgstr "API bağlantı durumunu gösterir."
+
+msgid "API_KEY"
+msgstr "API Key"
+
+msgid "API_SECRET_KEY"
+msgstr "Secret Key"
+
+msgid "TEST_API_CONNECTION"
+msgstr "API Bağlantısını Test Et"
+
+msgid "DISPLAY_SETTINGS"
+msgstr "Görüntüleme Ayarları"
+
+msgid "WORKING_MODE"
+msgstr "Çalışma Şekli"
+
+msgid "SHORTCODE_ONLY"
+msgstr "Sadece Shortcode Kullan (Ürün Sayfasına Ekleme)"
+
+msgid "SHORTCODE_PLUS_TAB"
+msgstr "Shortcode + Ürün Sayfasında Tab Olarak Göster"
+
+msgid "WORKING_MODE_DESCRIPTION"
+msgstr "Shortcode her zaman çalışır. Bu ayar ürün sayfasında taksit tabını gösterip göstermemeyi belirler."
+
+msgid "SHORTCODE"
+msgstr "Shortcode"
+
+msgid "COPY"
+msgstr "Kopyala"
+
+msgid "SHORTCODE_DESCRIPTION"
+msgstr "Bu shortcode'u taksit bilgilerini göstermek istediğiniz yere ekleyin."
+
+msgid "VAT_DYNAMIC_SETTINGS"
+msgstr "KDV ve Dinamik Taksit Ayarları"
+
+msgid "VAT_INCLUDED_PRICE"
+msgstr "KDV Dahil Fiyat Hesapla"
+
+msgid "VAT_INCLUDED_DESCRIPTION"
+msgstr "Bu seçenek aktif edildiğinde, taksit hesaplamaları KDV dahil fiyat üzerinden yapılır."
+
+msgid "VAT_RATE"
+msgstr "KDV Oranı (%)"
+
+msgid "VAT_RATE_DESCRIPTION"
+msgstr "KDV oranını yüzde olarak girin. Örnek: 20"
+
+msgid "DYNAMIC_INSTALLMENT_ACTIVE"
+msgstr "Dinamik Taksit Sistemi Aktif"
+
+msgid "DYNAMIC_INSTALLMENT_DESCRIPTION"
+msgstr "Bu seçenek aktif edildiğinde, varyasyonlu ürünlerde dinamik taksit sistemi çalışır."
+
+msgid "DYNAMIC_INSTALLMENT_SHORTCODE"
+msgstr "Dinamik Taksit Shortcode"
+
+msgid "DYNAMIC_SHORTCODE_DESCRIPTION"
+msgstr "Bu shortcode varyasyonlu ürünlerde dinamik taksit gösterimi için kullanılır."
+
+msgid "CUSTOM_CSS_SETTINGS"
+msgstr "Özel CSS Ayarları"
+
+msgid "CUSTOM_CSS_CODES"
+msgstr "Özel CSS Kodları"
+
+msgid "CUSTOM_CSS_DESCRIPTION"
+msgstr "Taksit tablosu görünümünü özelleştirmek için CSS kodları ekleyebilirsiniz. Bu CSS kodları sadece iyzico taksit elementlerine uygulanacaktır."
+
+msgid "EXAMPLE_CSS_CLASSES"
+msgstr "Örnek CSS sınıfları:"
+
+msgid "INSTALLMENT_TABLE"
+msgstr "Taksit tablosu"
+
+msgid "INSTALLMENT_AMOUNTS"
+msgstr "Taksit tutarları"
+
+msgid "TABLE_HEADER"
+msgstr "Tablo başlığı"
+
+msgid "CARD_LOGOS"
+msgstr "Kart logoları"
+
+msgid "SAVE_SETTINGS"
+msgstr "Ayarları Kaydet"
+
+msgid "INSUFFICIENT_PERMISSIONS"
+msgstr "Yetkiniz yok."
+
+msgid "IYZICO"
+msgstr "iyzico"

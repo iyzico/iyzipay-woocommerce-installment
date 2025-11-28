@@ -15,29 +15,221 @@ msgstr ""
 "X-Loco-Version: 2.6.3; wp-6.3-alpha-55617"
 
 # This file is distributed under the GNU General Public License v2 or later.
-msgid "API credentials are missing."
+msgid "MISSING_API_CREDENTIALS"
 msgstr "API credentials are missing."
 
-msgid "An error occurred while retrieving installment information."
+msgid "INSTALLMENT_INFO_ERROR"
 msgstr "An error occurred while retrieving installment information."
 
-msgid "Security verification failed."
+msgid "SECURITY_VERIFICATION_FAILED"
 msgstr "Security verification failed."
 
-msgid "Invalid price."
+msgid "INVALID_PRICE"
 msgstr "Invalid price."
 
-msgid "Installment"
+msgid "INSTALLMENT"
 msgstr "Installment"
 
-msgid "Total"
+msgid "TOTAL"
 msgstr "Total"
 
-msgid "Installment Options"
+msgid "INSTALLMENT_OPTIONS"
 msgstr "Installment Options"
 
-msgid "No installment options found."
+msgid "NO_INSTALLMENT_OPTIONS"
 msgstr "No installment options found."
 
-msgid "Price"
+msgid "PRICE"
 msgstr "Price"
+
+msgid "API_CREDENTIALS_NOT_CONFIGURED"
+msgstr "API credentials are not configured"
+
+msgid "SECURITY_CHECK_FAILED"
+msgstr "Security check failed"
+
+msgid "DYNAMIC_INSTALLMENTS_NOT_ENABLED"
+msgstr "Dynamic installments are not enabled"
+
+msgid "INVALID_PRODUCT_ID"
+msgstr "Invalid product ID"
+
+msgid "PRODUCT_NOT_FOUND"
+msgstr "Product not found"
+
+msgid "TOO_MANY_REQUESTS"
+msgstr "Too many requests. Please wait a moment."
+
+msgid "PLEASE_SELECT_OPTION"
+msgstr "Please select an option."
+
+msgid "PRICE_INFO_NOT_FOUND"
+msgstr "Price information not found."
+
+msgid "INSTALLMENTS_LOADING"
+msgstr "Loading installments..."
+
+msgid "UNKNOWN_ERROR"
+msgstr "Unknown error"
+
+msgid "ERROR_PREFIX"
+msgstr "Error:"
+
+msgid "CONNECTION_ERROR_RETRY"
+msgstr "Connection error. Please try again."
+
+msgid "VALID_PRICE_NOT_SPECIFIED"
+msgstr "A valid price was not specified."
+
+msgid "INSTALLMENT_COUNT"
+msgstr "Installment Count"
+
+msgid "INSTALLMENT_AMOUNT"
+msgstr "Installment Amount"
+
+msgid "IYZICO_INSTALLMENT_OPTIONS"
+msgstr "iyzico Installment Options"
+
+msgid "IYZICO_INSTALLMENT_SHORT"
+msgstr "iyzico Installment"
+
+msgid "COPY_SUCCESS"
+msgstr "Copied!"
+
+msgid "COPY_ERROR"
+msgstr "Could not copy!"
+
+msgid "EMPTY_CREDENTIALS"
+msgstr "API Key and Secret Key fields cannot be empty."
+
+msgid "TESTING"
+msgstr "Testing..."
+
+msgid "CONNECTED"
+msgstr "Connection Successful!"
+
+msgid "DISCONNECTED"
+msgstr "Connection Failed!"
+
+msgid "CONNECTION_SUCCESS"
+msgstr "API connection successful."
+
+msgid "CONNECTION_ERROR"
+msgstr "API connection failed."
+
+msgid "CONNECTION_NOT_CONFIGURED"
+msgstr "Connection Not Configured"
+
+msgid "API_SETTINGS"
+msgstr "API Settings"
+
+msgid "ENVIRONMENT"
+msgstr "Environment"
+
+msgid "TEST_SANDBOX"
+msgstr "Test (Sandbox)"
+
+msgid "LIVE"
+msgstr "Live"
+
+msgid "TEST_ENV_WARNING"
+msgstr "You cannot process transactions with real cards in the test environment."
+
+msgid "API_CONNECTION_STATUS"
+msgstr "API Connection Status"
+
+msgid "API_STATUS_DESCRIPTION"
+msgstr "Shows API connection status."
+
+msgid "API_KEY"
+msgstr "API Key"
+
+msgid "API_SECRET_KEY"
+msgstr "Secret Key"
+
+msgid "TEST_API_CONNECTION"
+msgstr "Test API Connection"
+
+msgid "DISPLAY_SETTINGS"
+msgstr "Display Settings"
+
+msgid "WORKING_MODE"
+msgstr "Working Mode"
+
+msgid "SHORTCODE_ONLY"
+msgstr "Use Only Shortcode (Add to Product Page)"
+
+msgid "SHORTCODE_PLUS_TAB"
+msgstr "Shortcode + Show as Tab on Product Page"
+
+msgid "WORKING_MODE_DESCRIPTION"
+msgstr "Shortcode always works. This setting determines whether to show the installment tab on the product page."
+
+msgid "SHORTCODE"
+msgstr "Shortcode"
+
+msgid "COPY"
+msgstr "Copy"
+
+msgid "SHORTCODE_DESCRIPTION"
+msgstr "Add this shortcode wherever you want to display installment information."
+
+msgid "VAT_DYNAMIC_SETTINGS"
+msgstr "VAT and Dynamic Installment Settings"
+
+msgid "VAT_INCLUDED_PRICE"
+msgstr "Calculate Price Including VAT"
+
+msgid "VAT_INCLUDED_DESCRIPTION"
+msgstr "When this option is enabled, installment calculations are made on the price including VAT."
+
+msgid "VAT_RATE"
+msgstr "VAT Rate (%)"
+
+msgid "VAT_RATE_DESCRIPTION"
+msgstr "Enter VAT rate as a percentage. Example: 20"
+
+msgid "DYNAMIC_INSTALLMENT_ACTIVE"
+msgstr "Dynamic Installment System Active"
+
+msgid "DYNAMIC_INSTALLMENT_DESCRIPTION"
+msgstr "When this option is enabled, the dynamic installment system works for variable products."
+
+msgid "DYNAMIC_INSTALLMENT_SHORTCODE"
+msgstr "Dynamic Installment Shortcode"
+
+msgid "DYNAMIC_SHORTCODE_DESCRIPTION"
+msgstr "This shortcode is used for dynamic installment display in variable products."
+
+msgid "CUSTOM_CSS_SETTINGS"
+msgstr "Custom CSS Settings"
+
+msgid "CUSTOM_CSS_CODES"
+msgstr "Custom CSS Codes"
+
+msgid "CUSTOM_CSS_DESCRIPTION"
+msgstr "You can add CSS codes to customize the installment table appearance. These CSS codes will only be applied to iyzico installment elements."
+
+msgid "EXAMPLE_CSS_CLASSES"
+msgstr "Example CSS Classes:"
+
+msgid "INSTALLMENT_TABLE"
+msgstr "Installment table"
+
+msgid "INSTALLMENT_AMOUNTS"
+msgstr "Installment amounts"
+
+msgid "TABLE_HEADER"
+msgstr "Table header"
+
+msgid "CARD_LOGOS"
+msgstr "Card logos"
+
+msgid "SAVE_SETTINGS"
+msgstr "Save Settings"
+
+msgid "INSUFFICIENT_PERMISSIONS"
+msgstr "You do not have sufficient permissions."
+
+msgid "IYZICO"
+msgstr "iyzico"

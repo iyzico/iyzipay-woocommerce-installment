@@ -1,6 +1,6 @@
 === iyzico Installment ===
-Contributors: iyzico, tarikkamat
-Tags: iyzico, woocommerce, installment, taksit, ürün-sayfası
+Contributors: iyzico, tarikkamat, ta2edh
+Tags: iyzico, woocommerce, installment, product-page
 Tested up to: 6.8
 Stable tag: 1.1.0
 Requires at least: 6.6
@@ -8,108 +8,108 @@ Requires PHP: 7.4.33
 License: GPL v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
-iyzico taksit hesaplama motoru ile ürün sayfalarında taksit seçeneklerini gösterin.
+Display installment options on product pages with iyzico installment calculation engine.
 
 == Description ==
 
-iyzico Installment eklentisi, WooCommerce ürün sayfalarında iyzico'nun taksit hesaplamasını kullanarak müşterilerinize taksit seçeneklerini gösterir.
+The iyzico Installment plugin displays installment options to your customers on WooCommerce product pages using iyzico's installment calculation.
 
-**Ana Özellik:**
+**Key Features:**
 
-* Ürün sayfasında taksit seçeneklerini görüntüleme
-* KDV dahil fiyat hesaplama seçeneği
-* Admin arayüzünden özel CSS ekleme
-* iyzico taksit hesaplama entegrasyonu
-* WooCommerce ürün sayfalarına otomatik entegrasyon
-* Responsive tasarım
+* Display installment options on product pages
+* VAT-inclusive price calculation option
+* Custom CSS addition from admin interface
+* iyzico installment calculation integration
+* Automatic integration with WooCommerce product pages
+* Responsive design
 
-**Ne Yapar:**
+**What It Does:**
 
-Bu eklenti sadece ürün sayfalarında taksit bilgilerini gösterir. Ödeme işlemi yapmaz, sadece taksit hesaplaması ve görüntüleme hizmeti sunar.
+This plugin only displays installment information on product pages. It does not process payments, only provides installment calculation and display services.
 
-**Gereksinimler:**
+**Requirements:**
 
-* PHP 7.4.33 ve üzeri
+* PHP 7.4.33 and higher
 * cURL extension
-* WooCommerce 9.0.0 ve üzeri
-* WordPress 6.6.2 ve üzeri
-* iyzico WooCommerce (ödeme eklentisi)
-* iyzico hesabı (taksit hesaplama için)
+* WooCommerce 9.0.0 and higher
+* WordPress 6.6.2 and higher
+* iyzico WooCommerce (payment plugin)
+* iyzico account (for installment calculation)
 
-**Kullanım:**
+**Usage:**
 
-Eklenti kurulduktan sonra, tüm WooCommerce ürün sayfalarında otomatik olarak taksit seçenekleri görüntülenir. Müşteriler ürün fiyatını ve mevcut taksit seçeneklerini görebilir.
+After plugin installation, installment options are automatically displayed on all WooCommerce product pages. Customers can see the product price and available installment options.
 
 == Installation ==
 
-**Manuel Kurulum:**
+**Manual Installation:**
 
-1. Eklenti ZIP dosyasını indirin
-2. WordPress yönetici panelinde **Eklentiler > Yeni Ekle** sayfasına gidin
-3. **Eklenti Yükle** butonuna tıklayın
-4. İndirdiğiniz ZIP dosyasını seçin ve **Şimdi Yükle** butonuna tıklayın
-5. Kurulum tamamlandıktan sonra **Eklentiyi Etkinleştir** butonuna tıklayın
+1. Download the plugin ZIP file
+2. Go to **Plugins > Add New** in your WordPress admin panel
+3. Click the **Upload Plugin** button
+4. Select the ZIP file you downloaded and click the **Install Now** button
+5. After installation is complete, click the **Activate Plugin** button
 
-**WordPress.org'dan Kurulum:**
+**Installation from WordPress.org:**
 
-1. WordPress yönetici panelinde **Eklentiler > Yeni Ekle** sayfasına gidin
-2. Arama kutusuna "iyzico Installment" yazın
-3. Eklentiyi bulun ve **Kur** butonuna tıklayın
-4. Kurulum tamamlandıktan sonra **Etkinleştir** butonuna tıklayın
+1. Go to **Plugins > Add New** in your WordPress admin panel
+2. Type "iyzico Installment" in the search box
+3. Find the plugin and click the **Install** button
+4. After installation is complete, click the **Activate** button
 
-**Kurulum Sonrası:**
+**Post-Installation:**
 
-1. **WooCommerce > Ayarlar > Genel** sayfasına gidin
-2. iyzico Installment eklentisini etkinleştirin
-3. iyzico hesap bilgilerinizi girin
-4. Ürün sayfasında taksit seçeneklerinin görüntülendiğini kontrol edin
+1. Go to **WooCommerce > Settings > General** page
+2. Enable the iyzico Installment plugin
+3. Enter your iyzico account information
+4. Check that installment options are displayed on the product page
 
 == Frequently Asked Questions ==
 
-**= Bu eklenti ödeme alır mı? =**
+**= Does this plugin process payments? =**
 
-Hayır, bu eklenti sadece ürün sayfalarında taksit seçeneklerini gösterir. Ödeme işlemi yapmaz.
+No, this plugin only displays installment options on product pages. It does not process payments.
 
-**= Hangi sayfalarda taksit seçenekleri görünür? =**
+**= On which pages are installment options visible? =**
 
-Tüm WooCommerce ürün sayfalarında otomatik olarak görünür.
+Automatically visible on all WooCommerce product pages.
 
-**= WooCommerce uyumluluğu nedir? =**
+**= What is the WooCommerce compatibility? =**
 
-Eklenti WooCommerce 9.0.0 ve üzeri versiyonlarla uyumludur.
+The plugin is compatible with WooCommerce 9.0.0 and higher versions.
 
-**= Taksit hesaplaması nasıl yapılır? =**
+**= How is installment calculation done? =**
 
-iyzico'nun taksit hesaplama motoru kullanılarak gerçek zamanlı hesaplama yapılır.
+Real-time calculation is done using iyzico's installment calculation engine.
 
-**= Destek alabilir miyim? =**
+**= Can I get support? =**
 
-Evet, teknik destek için iyzico müşteri hizmetleri ile iletişime geçebilirsiniz.
+Yes, you can contact iyzico customer service for technical support.
 
 == Screenshots ==
 
-1. Ürün sayfası - Taksit seçenekleri
-2. Yönetici paneli - Eklenti ayarları
+1. Product page - Installment options
+2. Admin panel - Plugin settings
 
 == Changelog ==
 
 = 1.1.0 =
-* Dinamik taksit sistemi - Varyasyonlu ürünlerde anlık taksit güncelleme
-* [dynamic_iyzico_installment] shortcode desteği
-* KDV hesaplama seçeneği eklendi
-* Admin panelinden özel CSS ekleme özelliği
+* Dynamic installment system - Real-time installment updates for variable products
+* [dynamic_iyzico_installment] shortcode support
+* VAT calculation option added
+* Custom CSS addition feature from admin panel
 
 = 1.0.0 =
-* İlk sürüm
-* WooCommerce ürün sayfası entegrasyonu
-* iyzico taksit hesaplama motoru entegrasyonu
-* Taksit seçeneklerini görüntüleme
-* Responsive tasarım
+* First release
+* WooCommerce product page integration
+* iyzico installment calculation engine integration
+* Display installment options
+* Responsive design
 
 == Upgrade Notice ==
 
 = 1.1.0 =
-Major özellik güncellemesi! Dinamik taksit sistemi ve özelleştirme seçenekleri eklendi. Güncelleme şiddetle önerilir.
+Major feature update! Dynamic installment system and customization options added. Update is highly recommended.
 
 = 1.0.0 =
-Bu ilk sürümdür. Güvenlik ve performans iyileştirmeleri için güncel tutmanız önerilir.
+This is the first release. It is recommended to keep it updated for security and performance improvements.

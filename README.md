@@ -5,154 +5,154 @@
 [![PHP](https://img.shields.io/badge/PHP-7.4.33+-red.svg)](https://php.net/)
 [![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
-iyzico Installment eklentisi, WooCommerce ürün sayfalarında iyzico'nun taksit hesaplamasını kullanarak müşterilerinize taksit seçeneklerini gösterir. Bu eklenti sadece taksit bilgilerini görüntüler, ödeme işlemi yapmaz.
+The iyzico Installment plugin displays installment options to your customers using iyzico's installment calculation on WooCommerce product pages. This plugin only displays installment information and does not process payments.
 
-## 🚀 Özellikler
+## 🚀 Features
 
-- **Ürün Sayfası Entegrasyonu**: WooCommerce ürün sayfalarında otomatik taksit gösterimi
-- **Dinamik Taksit Hesaplama**: Varyasyonlu ürünlerde fiyat değişiminde anlık taksit güncelleme
-- **iyzico API Entegrasyonu**: Gerçek zamanlı taksit hesaplama
-- **Çoklu Entegrasyon Seçenekleri**: Shortcode, ürün sekmesi veya widget olarak kullanım
-- **AJAX Desteği**: Dinamik taksit hesaplama ve güncelleme
-- **Responsive Tasarım**: Mobil ve masaüstü uyumlu
-- **Banka Logoları**: Kredi kartı familyalarına göre otomatik logo gösterimi
-- **KDV Hesaplama**: Ürün fiyatlarına KDV dahil etme seçeneği
-- **HPOS Uyumluluğu**: WooCommerce High-Performance Order Storage desteği
-- **Çoklu Dil Desteği**: i18n entegrasyonu
-- **Gelişmiş Loglama**: Detaylı hata takibi ve debug bilgileri
+- **Product Page Integration**: Automatic installment display on WooCommerce product pages
+- **Dynamic Installment Calculation**: Real-time installment updates for price changes in variable products
+- **iyzico API Integration**: Real-time installment calculation
+- **Multiple Integration Options**: Use as shortcode, product tab, or widget
+- **AJAX Support**: Dynamic installment calculation and updates
+- **Responsive Design**: Mobile and desktop compatible
+- **Bank Logos**: Automatic logo display by credit card families
+- **VAT Calculation**: Option to include VAT in product prices
+- **HPOS Compatibility**: WooCommerce High-Performance Order Storage support
+- **Multi-language Support**: i18n integration
+- **Advanced Logging**: Detailed error tracking and debug information
 
-## 📋 Gereksinimler
+## 📋 Requirements
 
-- **WordPress**: 6.6.2 veya üzeri
-- **WooCommerce**: 9.3.3 veya üzeri
-- **PHP**: 7.4.33 veya üzeri
-- **cURL Extension**: PHP cURL desteği
-- **iyzico WooCommerce**: Ana ödeme eklentisi
-- **iyzico Hesabı**: Taksit hesaplama için API erişimi
+- **WordPress**: 6.6.2 or higher
+- **WooCommerce**: 9.3.3 or higher
+- **PHP**: 7.4.33 or higher
+- **cURL Extension**: PHP cURL support
+- **iyzico WooCommerce**: Main payment plugin
+- **iyzico Account**: API access for installment calculation
 
-## 🛠️ Kurulum
+## 🛠️ Installation
 
-### WordPress.org'dan Kurulum (Önerilen)
+### Installation from WordPress.org (Recommended)
 
-1. WordPress yönetici panelinde **Eklentiler > Yeni Ekle** sayfasına gidin
-2. Arama kutusuna "iyzico Installment" yazın
-3. Eklentiyi bulun ve **Kur** butonuna tıklayın
-4. Kurulum tamamlandıktan sonra **Etkinleştir** butonuna tıklayın
+1. Go to **Plugins > Add New** in your WordPress admin panel
+2. Type "iyzico Installment" in the search box
+3. Find the plugin and click the **Install** button
+4. After installation is complete, click the **Activate** button
 
-### Manuel Kurulum
+### Manual Installation
 
-1. Eklenti ZIP dosyasını indirin
-2. WordPress yönetici panelinde **Eklentiler > Yeni Ekle** sayfasına gidin
-3. **Eklenti Yükle** butonuna tıklayın
-4. İndirdiğiniz ZIP dosyasını seçin ve **Şimdi Yükle** butonuna tıklayın
-5. Kurulum tamamlandıktan sonra **Eklentiyi Etkinleştir** butonuna tıklayın
+1. Download the plugin ZIP file
+2. Go to **Plugins > Add New** in your WordPress admin panel
+3. Click the **Upload Plugin** button
+4. Select the downloaded ZIP file and click the **Install Now** button
+5. After installation is complete, click the **Activate Plugin** button
 
-## ⚙️ Yapılandırma
+## ⚙️ Configuration
 
-### 1. API Kimlik Bilgileri
+### 1. API Credentials
 
-Eklentiyi kullanabilmek için iyzico hesap bilgilerinizi girmeniz gerekir:
+You need to enter your iyzico account information to use the plugin:
 
-1. **iyzico Installment** sayfasına gidin
-2. **API Key** ve **Secret Key** alanlarını doldurun
-3. **Test Modu** veya **Canlı Mod** seçin
-4. **Kaydet** butonuna tıklayın
+1. Go to the **iyzico Installment** page
+2. Fill in the **API Key** and **Secret Key** fields
+3. Select **Test Mode** or **Live Mode**
+4. Click the **Save** button
 
-### 2. Entegrasyon Türü
+### 2. Integration Type
 
-Eklenti üç farklı entegrasyon türü sunar:
+The plugin offers three different integration types:
 
-- **Shortcode**: `[iyzico_installment]` veya `[dynamic_iyzico_installment]` kullanarak istediğiniz yerde gösterebilirsiniz
-- **Ürün Sekmesi**: Ürün sayfalarında otomatik olarak taksit sekmesi ekler
-- **Widget**: Sidebar veya footer'da taksit bilgilerini gösterir
+- **Shortcode**: Display anywhere using `[iyzico_installment]` or `[dynamic_iyzico_installment]`
+- **Product Tab**: Automatically adds installment tab on product pages
+- **Widget**: Display installment information in sidebar or footer
 
-### 3. Görünüm Ayarları
+### 3. Display Settings
 
-- **Taksit Sekmesi Gösterimi**: Ürün sayfalarında taksit sekmesi ekleme
-- **Responsive Tasarım**: Mobil uyumlu görünüm
+- **Installment Tab Display**: Add installment tab on product pages
+- **Responsive Design**: Mobile-compatible display
 
-## 🔧 Kullanım
+## 🔧 Usage
 
-### Shortcode Kullanımı
+### Shortcode Usage
 
-Herhangi bir sayfa veya yazıda taksit bilgilerini göstermek için:
+To display installment information on any page or post:
 
 ```php
 [iyzico_installment]
 ```
 
-### Dinamik Taksit Shortcode
+### Dynamic Installment Shortcode
 
-Varyasyonlu ürünlerde anlık taksit güncelleme için:
+For real-time installment updates in variable products:
 
 ```php
 [dynamic_iyzico_installment]
 ```
 
-### PHP Kod ile Kullanım
+### Usage with PHP Code
 
 ```php
-// Taksit bilgilerini programatik olarak almak için
+// To get installment information programmatically
 $installment_info = $GLOBALS['iyzico_api']->get_installment_info($product_price);
 
-// Shortcode'u render etmek için
-echo do_shortcode('[iyzico_installment]'); // veya [dynamic_iyzico_installment]
+// To render the shortcode
+echo do_shortcode('[iyzico_installment]'); // or [dynamic_iyzico_installment]
 ```
 
-### Tema Entegrasyonu
+### Theme Integration
 
-`functions.php` dosyanıza ekleyerek otomatik entegrasyon:
+Automatic integration by adding to your `functions.php` file:
 
 ```php
-// Ürün sayfalarında otomatik taksit gösterimi
+// Automatic installment display on product pages
 add_action('woocommerce_single_product_summary', function() {
-    echo do_shortcode('[iyzico_installment]'); // veya [dynamic_iyzico_installment]
+    echo do_shortcode('[iyzico_installment]'); // or [dynamic_iyzico_installment]
 }, 25);
 ```
 
-## 🏗️ Teknik Mimari
+## 🏗️ Technical Architecture
 
-Eklenti modüler bir yapıya sahiptir:
+The plugin has a modular structure:
 
 ```
 iyzico-installment/
-├── iyzico-installment.php          # Ana eklenti dosyası
-├── includes/                        # Sınıf dosyaları
-│   ├── class-iyzico-installment-settings.php    # Ayarlar yönetimi
-│   ├── class-iyzico-installment-api.php         # API entegrasyonu
-│   ├── class-iyzico-installment-frontend.php    # Frontend işlemleri
-│   ├── class-iyzico-installment-dynamic.php     # Dinamik taksit sistemi
-│   ├── class-iyzico-installment-logger.php      # Loglama sistemi
-│   ├── class-iyzico-installment-hpos.php        # HPOS uyumluluğu
-│   └── admin/                      # Yönetici paneli
-├── assets/                         # CSS, JS ve görseller
-│   ├── css/                        # Stil dosyaları
-│   ├── js/                         # JavaScript dosyaları
-│   └── images/                     # Banka logoları
-├── i18n/                           # Dil dosyaları
-└── logs/                           # Log dosyaları
+├── iyzico-installment.php          # Main plugin file
+├── includes/                        # Class files
+│   ├── class-iyzico-installment-settings.php    # Settings management
+│   ├── class-iyzico-installment-api.php         # API integration
+│   ├── class-iyzico-installment-frontend.php    # Frontend operations
+│   ├── class-iyzico-installment-dynamic.php     # Dynamic installment system
+│   ├── class-iyzico-installment-logger.php      # Logging system
+│   ├── class-iyzico-installment-hpos.php        # HPOS compatibility
+│   └── admin/                      # Admin panel
+├── assets/                         # CSS, JS and images
+│   ├── css/                        # Style files
+│   ├── js/                         # JavaScript files
+│   └── images/                     # Bank logos
+├── i18n/                           # Language files
+└── logs/                           # Log files
 ```
 
-### Sınıf Yapısı
+### Class Structure
 
-- **Settings**: Eklenti ayarlarını yönetir
-- **API**: iyzico API entegrasyonunu sağlar
-- **Frontend**: Kullanıcı arayüzü ve shortcode işlemleri
-- **Dynamic**: Varyasyonlu ürünlerde dinamik taksit hesaplama
-- **Logger**: Hata takibi ve debug bilgileri
-- **HPOS**: WooCommerce High-Performance Order Storage uyumluluğu
-- **Admin**: Yönetici paneli ayarları
+- **Settings**: Manages plugin settings
+- **API**: Provides iyzico API integration
+- **Frontend**: User interface and shortcode operations
+- **Dynamic**: Dynamic installment calculation for variable products
+- **Logger**: Error tracking and debug information
+- **HPOS**: WooCommerce High-Performance Order Storage compatibility
+- **Admin**: Admin panel settings
 
-## 🔌 API Entegrasyonu
+## 🔌 API Integration
 
-Eklenti iyzico'nun resmi PHP SDK'sını kullanır:
+The plugin uses iyzico's official PHP SDK:
 
 ```php
 use Iyzipay\Model\InstallmentInfo;
 use Iyzipay\Options;
 use Iyzipay\Request\RetrieveInstallmentInfoRequest;
 
-// Taksit bilgilerini al
+// Get installment information
 $request = new RetrieveInstallmentInfoRequest();
 $request->setLocale('tr');
 $request->setConversationId(uniqid('iyzico_installment_'));
@@ -162,14 +162,14 @@ $request->setBinNumber($bin_number);
 $response = InstallmentInfo::retrieve($request, $options);
 ```
 
-## 🎨 Özelleştirme
+## 🎨 Customization
 
-### CSS Özelleştirme
+### CSS Customization
 
-Eklentinin görünümünü admin panel üzerinden özelleştirebilirsiniz. Admin panelde bulunan "Özel CSS" alanına kendi stil kodlarınızı ekleyebilirsiniz:
+You can customize the plugin's appearance through the admin panel. You can add your own style codes to the "Custom CSS" field in the admin panel:
 
 ```css
-/* Taksit container */
+/* Installment container */
 .iyzico-installment-container {
     background: #ffffff;
     border: 1px solid #e0e0e0;
@@ -177,7 +177,7 @@ Eklentinin görünümünü admin panel üzerinden özelleştirebilirsiniz. Admin
     padding: 20px;
 }
 
-/* Banka kartları */
+/* Bank cards */
 .iyzico-bank-card {
     background: #fafafa;
     border: 1px solid #ddd;
@@ -192,14 +192,14 @@ Eklentinin görünümünü admin panel üzerinden özelleştirebilirsiniz. Admin
 }
 ```
 
-Daha detaylı örnekler için `style.css` dosyasını inceleyebilirsiniz.
+For more detailed examples, check the `style.css` file.
 
-### JavaScript Özelleştirme
+### JavaScript Customization
 
-Dinamik taksit güncellemesi için güvenli JavaScript işlemleri:
+Secure JavaScript operations for dynamic installment updates:
 
 ```javascript
-// Debug fonksiyonu - sadece WP_DEBUG modunda çalışır
+// Debug function - only works in WP_DEBUG mode
 function debugLog(message, data) {
     if (window.installment_ajax && window.installment_ajax.debug && typeof console !== 'undefined') {
         if (data !== undefined) {
@@ -210,12 +210,12 @@ function debugLog(message, data) {
     }
 }
 
-// Varyasyon değişikliklerini dinle
+// Listen for variation changes
 jQuery(document).on('found_variation', 'form.variations_form', function(event, variation) {
     if (variation && variation.display_price) {
         var finalPrice = parseFloat(variation.display_price);
         
-        // KDV hesaplama
+        // VAT calculation
         if (window.installment_ajax && window.installment_ajax.vat_enabled === 'true') {
             var vatRate = parseFloat(window.installment_ajax.vat_rate) || 0;
             finalPrice = finalPrice * (1 + (vatRate / 100));
@@ -226,15 +226,15 @@ jQuery(document).on('found_variation', 'form.variations_form', function(event, v
     }
 });
 
-// Güvenli taksit bilgisi yükleme
+// Secure installment information loading
 function loadInstallments(price) {
-    // Fiyat doğrulama
+    // Price validation
     if (!price || price <= 0 || isNaN(price)) {
         debugLog('Invalid price:', price);
         return;
     }
     
-    // AJAX nesne varlık kontrolü
+    // AJAX object existence check
     if (!window.installment_ajax) {
         debugLog('installment_ajax object not found');
         return;
@@ -249,30 +249,30 @@ function loadInstallments(price) {
             product_id: parseInt(window.installment_ajax.product_id) || 0,
             nonce: window.installment_ajax.nonce
         },
-        timeout: 10000, // 10 saniye timeout
+        timeout: 10000, // 10 second timeout
         success: function(response) {
             debugLog('AJAX Response:', response);
             
             if (response && response.success) {
-                // response.data zaten server tarafında wp_kses_post() ile sanitize edilmiş
+                // response.data is already sanitized with wp_kses_post() on server side
                 jQuery('.dynamic-iyzico-installment').html(response.data);
             } else {
-                // Hata mesajlarını güvenli şekilde göster - XSS koruması
-                var errorMsg = (response && response.data) ? String(response.data) : 'Bilinmeyen hata';
+                // Show error messages securely - XSS protection
+                var errorMsg = (response && response.data) ? String(response.data) : 'Unknown error';
                 var sanitizedError = jQuery('<div>').text(errorMsg).html();
-                jQuery('.dynamic-iyzico-installment').html('<p>Hata: ' + sanitizedError + '</p>');
+                jQuery('.dynamic-iyzico-installment').html('<p>Error: ' + sanitizedError + '</p>');
             }
         },
         error: function(xhr, status, error) {
             debugLog('AJAX Error - Status:', status);
             debugLog('AJAX Error - Error:', error);
             
-            // Kullanıcıya teknik detayları gösterme - güvenlik
-            var userMessage = 'Bağlantı hatası. Lütfen tekrar deneyin.';
+            // Don't show technical details to user - security
+            var userMessage = 'Connection error. Please try again.';
             
-            // Timeout durumunda özel mesaj
+            // Special message for timeout
             if (status === 'timeout') {
-                userMessage = 'İstek zaman aşımına uğradı. Lütfen tekrar deneyin.';
+                userMessage = 'Request timed out. Please try again.';
             }
             
             jQuery('.dynamic-iyzico-installment').html('<p>' + userMessage + '</p>');
@@ -281,100 +281,100 @@ function loadInstallments(price) {
 }
 ```
 
-## 🐛 Sorun Giderme
+## 🐛 Troubleshooting
 
-### Yaygın Sorunlar
+### Common Issues
 
-**Taksit bilgileri görünmüyor:**
-- API kimlik bilgilerini kontrol edin
-- WooCommerce'ın aktif olduğundan emin olun
-- Dinamik taksit ayarının etkin olduğunu kontrol edin
-- Log dosyalarını inceleyin
+**Installment information not displaying:**
+- Check API credentials
+- Ensure WooCommerce is active
+- Check if dynamic installment setting is enabled
+- Review log files
 
-**Varyasyonlarda taksit güncellenmiyor:**
-- JavaScript hatalarını kontrol edin (Browser Console)
-- AJAX isteklerinin başarılı olduğunu kontrol edin
-- Nonce değerinin doğru olduğundan emin olun
+**Installment not updating on variations:**
+- Check JavaScript errors (Browser Console)
+- Ensure AJAX requests are successful
+- Verify nonce value is correct
 
-**API hatası alıyorsunuz:**
-- API Key ve Secret Key'in doğru olduğunu kontrol edin
-- Test/Canlı mod ayarını kontrol edin
-- cURL extension'ın aktif olduğundan emin olun
+**Getting API errors:**
+- Check if API Key and Secret Key are correct
+- Check Test/Live mode setting
+- Ensure cURL extension is active
 
-## 📱 Responsive Tasarım
+## 📱 Responsive Design
 
-Eklenti tüm cihazlarda uyumlu çalışır:
+The plugin works compatible on all devices:
 
-- **Masaüstü**: Tam genişlik tablo görünümü
-- **Tablet**: Orta boyut tablo görünümü
-- **Mobil**: Dikey liste görünümü
+- **Desktop**: Full-width table view
+- **Tablet**: Medium-sized table view
+- **Mobile**: Vertical list view
 
-## 🌐 Çoklu Dil Desteği
+## 🌐 Multi-language Support
 
-Eklenti i18n standartlarını kullanır:
+The plugin uses i18n standards:
 
-- **Türkçe**: Varsayılan dil
-- **İngilizce**: Çeviri dosyaları mevcut
-- **Özel Çeviriler**: `languages/` klasöründe eklenebilir
+- **Turkish**: Default language
+- **English**: Translation files available
+- **Custom Translations**: Can be added in `languages/` folder
 
-## 🔒 Güvenlik
+## 🔒 Security
 
-- **Nonce Kontrolü**: AJAX isteklerinde güvenlik
-- **Rate Limiting**: DDoS saldırılarına karşı koruma (IP başına 15 req/min)
-- **ABSPATH Kontrolü**: Doğrudan erişim engelleme
-- **Gelişmiş CSS Sanitization**: XSS koruması ile güvenli stil ekleme
-- **Production-Safe Debugging**: Debug modunda kontrollü log sistemi
-- **API Güvenliği**: iyzico'nun güvenli API protokolü
-- **WordPress Standartları**: WordPress coding standards uyumlu
-- **Input/Output Sanitization**: Tüm veri girişlerinde güvenlik kontrolü
+- **Nonce Control**: Security in AJAX requests
+- **Rate Limiting**: Protection against DDoS attacks (15 req/min per IP)
+- **ABSPATH Check**: Prevent direct access
+- **Advanced CSS Sanitization**: Secure style addition with XSS protection
+- **Production-Safe Debugging**: Controlled log system in debug mode
+- **API Security**: iyzico's secure API protocol
+- **WordPress Standards**: WordPress coding standards compliant
+- **Input/Output Sanitization**: Security checks on all data inputs
 
-## 📊 Performans
+## 📊 Performance
 
-- **Lazy Loading**: Sadece gerekli sayfalarda script yükleme
-- **AJAX Caching**: Taksit bilgilerini önbellekleme
-- **Database Optimization**: Veritabanı sorgularını optimize etme
+- **Lazy Loading**: Load scripts only on necessary pages
+- **AJAX Caching**: Cache installment information
+- **Database Optimization**: Optimize database queries
 
-## 🤝 Katkıda Bulunma
+## 🤝 Contributing
 
-1. Bu repository'yi fork edin
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add amazing feature'`)
-4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
-5. Pull Request oluşturun
+1. Fork this repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push your branch (`git push origin feature/amazing-feature`)
+5. Create a Pull Request
 
-## 📄 Lisans
+## 📄 License
 
-Bu proje [GPL v2](https://www.gnu.org/licenses/gpl-2.0.html) lisansı altında lisanslanmıştır.
+This project is licensed under the [GPL v2](https://www.gnu.org/licenses/gpl-2.0.html) license.
 
-## 📞 Destek
+## 📞 Support
 
-- **Teknik Destek**: [iyzico Müşteri Hizmetleri](https://iyzico.com/iletisim)
-- **Dokümantasyon**: [iyzico Developer Portal](https://docs.iyzico.com/)
+- **Technical Support**: [iyzico Customer Service](https://iyzico.com/iletisim)
+- **Documentation**: [iyzico Developer Portal](https://docs.iyzico.com/)
 - **GitHub Issues**: [Repository Issues](https://github.com/iyzico/iyzipay-woocommerce-installment/issues)
 
-## 🔄 Güncellemeler
+## 🔄 Updates
 
 ### v1.1.0
-- **Dinamik Taksit Sistemi**: Varyasyonlu ürünlerde anlık taksit güncelleme
-- **KDV Hesaplama**: Ürün fiyatlarına KDV dahil etme seçeneği
-- **AJAX Güvenlik**: Nonce kontrolü ve güvenlik iyileştirmeleri
-- **CSS Optimizasyonu**: Responsive tasarım iyileştirmeleri
+- **Dynamic Installment System**: Real-time installment updates for variable products
+- **VAT Calculation**: Option to include VAT in product prices
+- **AJAX Security**: Nonce control and security improvements
+- **CSS Optimization**: Responsive design improvements
 
 ### v1.0.0
-- İlk sürüm
-- WooCommerce ürün sayfası entegrasyonu
-- iyzico taksit hesaplama entegrasyonu
-- Taksit seçeneklerini görüntüleme
-- Responsive tasarım
-- HPOS uyumluluğu
-- Gelişmiş loglama sistemi
+- Initial release
+- WooCommerce product page integration
+- iyzico installment calculation integration
+- Display installment options
+- Responsive design
+- HPOS compatibility
+- Advanced logging system
 
 ## 📝 Changelog
 
-Detaylı değişiklik listesi için [CHANGELOG.md](CHANGELOG.md) dosyasını inceleyin.
+For detailed changelist, see [CHANGELOG.md](CHANGELOG.md) file.
 
 ---
 
-**iyzico Installment** - WooCommerce için profesyonel taksit çözümü
+**iyzico Installment** - Professional installment solution for WooCommerce
 
 [![iyzico](https://img.shields.io/badge/iyzico-Official%20Plugin-orange.svg)](https://iyzico.com/)

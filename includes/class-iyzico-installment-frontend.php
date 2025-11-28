@@ -1,281 +1,431 @@
 <?php
 
-if (!defined('ABSPATH')) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
 /**
- * iyzico Installment Frontend
+ * Iyzico Installment Frontend class.
+ *
+ * @package  Iyzico_Installment
+ * @category Core
+ * @author   Iyzico
+ * @license  GPLv2 or later
+ * @link     https://iyzico.com
  */
-class Iyzico_Installment_Frontend
-{
-    private $settings;
-    private $api;
+class Iyzico_Installment_Frontend {
 
-    public function __construct(Iyzico_Installment_Settings $settings, Iyzico_Installment_API $api)
-    {
-        $this->settings = $settings;
-        $this->api = $api;
+	/**
+	 * Settings instance
+	 *
+	 * @var Iyzico_Installment_Settings
+	 */
+	private $_settings;
 
-        add_shortcode('iyzico_installment', array($this, 'render_shortcode'));
+	/**
+	 * API instance
+	 *
+	 * @var Iyzico_Installment_API
+	 */
+	private $_api;
 
-        // Add hooks for direct integration
-        if ($this->settings->show_product_tabs()) {
-            add_filter('woocommerce_product_tabs', array($this, 'add_installment_tab'));
-            add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
-        }
-    }
+	/**
+	 * Constructor
+	 *
+	 * @param Iyzico_Installment_Settings $settings Settings instance.
+	 * @param Iyzico_Installment_API      $api      API instance.
+	 */
+	public function __construct( Iyzico_Installment_Settings $settings, Iyzico_Installment_API $api ) {
+		$this->_settings = $settings;
+		$this->_api      = $api;
 
-    public function enqueue_scripts()
-    {
-        if (!$this->should_load_scripts()) {
-            return;
-        }
+		add_shortcode( 'iyzico_installment', array( $this, 'renderShortcode' ) );
 
-        wp_enqueue_script(
-            'iyzico-installment',
-            IYZI_INSTALLMENT_ASSETS_URL . '/js/iyzico-installment.js',
-            array('jquery'),
-            IYZI_INSTALLMENT_VERSION,
-            true
-        );
+		// Add hooks for direct integration
+		if ( $this->_settings->showProductTabs() ) {
+			add_filter(
+				'woocommerce_product_tabs',
+				array( $this, 'addInstallmentTab' )
+			);
+			add_action(
+				'wp_enqueue_scripts',
+				array( $this, 'enqueueScripts' )
+			);
+		}
+	}
 
-        wp_localize_script('iyzico-installment', 'iyzicoInstallment', array(
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('iyzico_installment_nonce'),
-            'integrationType' => $this->settings->get_integration_type(),
-            'isProductPage' => is_product(),
-            'productPrice' => $this->get_product_price(),
-            'installmentText' => __('Taksit', 'iyzico-installment'),
-            'totalText' => __('Toplam', 'iyzico-installment'),
-            'currencySymbol' => get_woocommerce_currency_symbol(),
-            'assetsUrl' => IYZI_INSTALLMENT_ASSETS_URL
-        ));
+	/**
+	 * Enqueue scripts and styles
+	 *
+	 * @return void
+	 */
+	public function enqueueScripts() {
+		if ( ! $this->_shouldLoadScripts() ) {
+			return;
+		}
 
-        // Add custom CSS if provided
-        $this->add_custom_css();
-        
-    }
+		wp_enqueue_script(
+			'iyzico-installment',
+			IYZI_INSTALLMENT_ASSETS_URL . '/js/iyzico-installment.js',
+			array( 'jquery' ),
+			IYZI_INSTALLMENT_VERSION,
+			true
+		);
 
-    private function should_load_scripts()
-    {
-        if (!$this->settings->has_credentials()) {
-            return false;
-        }
+		wp_localize_script(
+			'iyzico-installment',
+			'iyzicoInstallment',
+			array(
+				'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
+				'nonce'           => wp_create_nonce( 'iyzico_installment_nonce' ),
+				'integrationType' => $this->_settings->getIntegrationType(),
+				'isProductPage'   => is_product(),
+				'productPrice'    => $this->_getProductPrice(),
+				'installmentText' => __( 'INSTALLMENT', 'iyzico-installment' ),
+				'totalText'       => __( 'TOTAL', 'iyzico-installment' ),
+				'currencySymbol'  => get_woocommerce_currency_symbol(),
+				'assetsUrl'       => IYZI_INSTALLMENT_ASSETS_URL,
+			)
+		);
 
-        if (is_product() && $this->settings->show_product_tabs()) {
-            return true;
-        }
+		// Add custom CSS if provided
+		$this->_addCustomCss();
+	}
 
-        global $post;
-        if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'iyzico_installment')) {
-            return true;
-        }
+	/**
+	 * Check if scripts should be loaded
+	 *
+	 * @return bool
+	 */
+	private function _shouldLoadScripts() {
+		if ( ! $this->_settings->hasCredentials() ) {
+			return false;
+		}
 
-        return false;
-    }
+		if ( is_product() && $this->_settings->showProductTabs() ) {
+			return true;
+		}
 
-    private function get_product_price()
-    {
-        if (!is_product()) {
-            return 0;
-        }
+		global $post;
+		if ( is_a( $post, 'WP_Post' )
+			&& has_shortcode( $post->post_content, 'iyzico_installment' )
+		) {
+			return true;
+		}
 
-        global $post;
-        $product = wc_get_product($post);
+		return false;
+	}
 
-        if (!$product || !is_a($product, 'WC_Product')) {
-            return 0;
-        }
+	/**
+	 * Get product price
+	 *
+	 * @return float
+	 */
+	private function _getProductPrice() {
+		if ( ! is_product() ) {
+			return 0;
+		}
 
-        return $product->get_price();
-    }
+		global $post;
+		$product = wc_get_product( $post );
 
-    public function render_shortcode($atts)
-    {
-        if (!$this->settings->has_credentials()) {
-            return '<p>' . esc_html__('API kimlik bilgileri yapılandırılmamış.', 'iyzico-installment') . '</p>';
-        }
+		if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+			return 0;
+		}
 
-        $atts = shortcode_atts(array(
-            'price' => $this->get_product_price(),
-            'bin' => '',
-        ), $atts, 'iyzico_installment');
+		return $product->get_price();
+	}
 
-        $price = floatval($atts['price']);
-        $bin = sanitize_text_field($atts['bin']);
+	/**
+	 * Render shortcode
+	 *
+	 * @param array $atts Shortcode attributes.
+	 *
+	 * @return string
+	 */
+	public function renderShortcode( $atts ) {
+		if ( ! $this->_settings->hasCredentials() ) {
+			return '<p>' . esc_html__( 'API_CREDENTIALS_NOT_CONFIGURED', 'iyzico-installment' ) . '</p>';
+		}
 
-        if ($price <= 0) {
-            return '<p>' . esc_html__('Geçerli bir fiyat belirtilmedi.', 'iyzico-installment') . '</p>';
-        }
+		$atts = shortcode_atts(
+			array(
+				'price' => $this->_getProductPrice(),
+				'bin'   => '',
+			),
+			$atts,
+			'iyzico_installment'
+		);
 
-        // Apply VAT if enabled
-        $price = $this->settings->calculate_price_with_vat($price);
+		$price = floatval( $atts['price'] );
+		$bin   = sanitize_text_field( $atts['bin'] );
 
-        $installment_info = $this->api->get_installment_info($price, $bin);
+		if ( $price <= 0 ) {
+			return '<p>' . esc_html__( 'VALID_PRICE_NOT_SPECIFIED', 'iyzico-installment' ) . '</p>';
+		}
 
-        if (is_wp_error($installment_info)) {
-            return '<p>' . esc_html($installment_info->get_error_message()) . '</p>';
-        }
+		// Apply VAT if enabled
+		$price = $this->_settings->calculatePriceWithVat( $price );
 
+		$installment_info = $this->_api->getInstallmentInfo( $price, $bin );
 
-        wp_enqueue_script(
-            'iyzico-installment',
-            IYZI_INSTALLMENT_ASSETS_URL . '/js/iyzico-installment.js',
-            array('jquery'),
-            IYZI_INSTALLMENT_VERSION,
-            true
-        );
+		if ( is_wp_error( $installment_info ) ) {
+			return '<p>' . esc_html( $installment_info->get_error_message() ) . '</p>';
+		}
 
-        wp_localize_script('iyzico-installment', 'iyzicoInstallment', array(
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('iyzico_installment_nonce'),
-            'integrationType' => $this->settings->get_integration_type(),
-            'isProductPage' => is_product(),
-            'productPrice' => $price,
-            'installmentText' => __('Taksit', 'iyzico-installment'),
-            'totalText' => __('Toplam', 'iyzico-installment'),
-            'currencySymbol' => get_woocommerce_currency_symbol()
-        ));
+		wp_enqueue_script(
+			'iyzico-installment',
+			IYZI_INSTALLMENT_ASSETS_URL . '/js/iyzico-installment.js',
+			array( 'jquery' ),
+			IYZI_INSTALLMENT_VERSION,
+			true
+		);
 
-        // Add custom CSS if provided
-        $this->add_custom_css();
+		wp_localize_script(
+			'iyzico-installment',
+			'iyzicoInstallment',
+			array(
+				'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
+				'nonce'           => wp_create_nonce( 'iyzico_installment_nonce' ),
+				'integrationType' => $this->_settings->getIntegrationType(),
+				'isProductPage'   => is_product(),
+				'productPrice'    => $price,
+				'installmentText' => __( 'INSTALLMENT', 'iyzico-installment' ),
+				'totalText'       => __( 'TOTAL', 'iyzico-installment' ),
+				'currencySymbol'  => get_woocommerce_currency_symbol(),
+			)
+		);
 
-        return $this->render_installment_table($installment_info);
-    }
+		// Add custom CSS if provided
+		$this->_addCustomCss();
 
-    public function add_installment_tab($tabs)
-    {
-        if (!is_product() || !$this->settings->has_credentials()) {
-            return $tabs;
-        }
+		return $this->_renderInstallmentTable( $installment_info );
+	}
 
-        $price = $this->get_product_price();
-        if ($price <= 0) {
-            return $tabs;
-        }
+	/**
+	 * Add installment tab to product pages
+	 *
+	 * @param array $tabs Existing tabs.
+	 *
+	 * @return array
+	 */
+	public function addInstallmentTab( $tabs ) {
+		if ( ! is_product() || ! $this->_settings->hasCredentials() ) {
+			return $tabs;
+		}
 
-        $tabs['iyzico_installment'] = array(
-            'title'    => __('Taksit Seçenekleri', 'iyzico-installment'),
-            'priority' => 25,
-            'callback' => array($this, 'render_installment_tab')
-        );
+		$price = $this->_getProductPrice();
+		if ( $price <= 0 ) {
+			return $tabs;
+		}
 
-        return $tabs;
-    }
+		$tabs['iyzico_installment'] = array(
+			'title'    => __( 'INSTALLMENT_OPTIONS', 'iyzico-installment' ),
+			'priority' => 25,
+			'callback' => array( $this, 'renderInstallmentTab' ),
+		);
 
-    public function render_installment_tab()
-    {
-        $price = $this->get_product_price();
-        
-        // Apply VAT if enabled
-        $price = $this->settings->calculate_price_with_vat($price);
-        
-        $installment_info = $this->api->get_installment_info($price);
+		return $tabs;
+	}
 
-        if (is_wp_error($installment_info)) {
-            echo '<p>' . esc_html($installment_info->get_error_message()) . '</p>';
-            return;
-        }
+	/**
+	 * Render installment tab content
+	 *
+	 * @return void
+	 */
+	public function renderInstallmentTab() {
+		$price = $this->_getProductPrice();
 
-        echo wp_kses_post($this->render_installment_table($installment_info));
-    }
+		// Apply VAT if enabled
+		$price = $this->_settings->calculatePriceWithVat( $price );
 
-    private function render_installment_table($installment_info)
-    {
-        if (empty($installment_info['installmentDetails'])) {
-            return '<p>' . esc_html__('Taksit seçeneği bulunamadı.', 'iyzico-installment') . '</p>';
-        }
+		$installment_info = $this->_api->getInstallmentInfo( $price );
 
-        ob_start();
-        ?>
-        <div class="iyzico-installment-container">
-            <h3 class="iyzico-installment-title"><?php echo esc_html__('Taksit Seçenekleri', 'iyzico-installment'); ?></h3>
+		if ( is_wp_error( $installment_info ) ) {
+			echo '<p>' . esc_html( $installment_info->get_error_message() ) . '</p>';
+			return;
+		}
 
-            <div class="iyzico-bank-grid">
-                <?php foreach ($installment_info['installmentDetails'] as $bank): ?>
-                    <div class="iyzico-bank-card" tabindex="0" aria-label="<?php echo esc_attr($bank['bankName'] . ' - ' . $bank['cardFamilyName']); ?>">
-                        <div class="iyzico-bank-logo-top">
-                            <?php echo $this->get_bank_logo($bank['bankName'], $bank['cardFamilyName']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-                        </div>
+		echo wp_kses_post( $this->_renderInstallmentTable( $installment_info ) );
+	}
 
-                        <div class="table-area">
-                            <table class="iyzico-installment-table" role="table" aria-label="<?php echo esc_attr($bank['bankName']); ?> taksit tablosu">
-                                <thead>
-                                    <tr>
-                                        <th><?php echo esc_html__('Taksit Sayısı', 'iyzico-installment'); ?></th>
-                                        <th class="amount"><?php echo esc_html__('Taksit Tutarı', 'iyzico-installment'); ?></th>
-                                        <th class="amount total"><?php echo esc_html__('Toplam', 'iyzico-installment'); ?></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($bank['installmentPrices'] as $installment): ?>
-                                        <tr>
-                                            <td><?php echo esc_html($installment['installmentNumber']); ?></td>
-                                            <td class="amount"><?php echo wp_kses_post(wc_price($installment['installmentPrice'])); ?></td>
-                                            <td class="amount total"><?php echo wp_kses_post(wc_price($installment['totalPrice'])); ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-        <?php
-        return ob_get_clean();
-    }
+	/**
+	 * Render installment table
+	 *
+	 * @param array $installment_info Installment information.
+	 *
+	 * @return string
+	 */
+	private function _renderInstallmentTable( $installment_info ) {
+		if ( empty( $installment_info['installmentDetails'] ) ) {
+			return '<p>' . esc_html__( 'NO_INSTALLMENT_OPTIONS', 'iyzico-installment' ) . '</p>';
+		}
 
-    private function get_bank_logo($bank_name, $card_family)
-    {
-        $card_family_lower = strtolower(trim($card_family));
-        if (strpos($card_family_lower, 'bonus') !== false) {
-            return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Bonus.png" alt="' . esc_attr($card_family) . '" class="bank-logo" title="' . esc_attr($card_family) . '">';
-        } elseif (strpos($card_family_lower, 'axess') !== false) {
-            return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Axess.png" alt="' . esc_attr($card_family) . '" class="bank-logo" title="' . esc_attr($card_family) . '">';
-        } elseif (strpos($card_family_lower, 'maximum') !== false) {
-            return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Maximum.png" alt="' . esc_attr($card_family) . '" class="bank-logo" title="' . esc_attr($card_family) . '">';
-        } elseif (strpos($card_family_lower, 'paraf') !== false) {
-            return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Paraf.png" alt="' . esc_attr($card_family) . '" class="bank-logo" title="' . esc_attr($card_family) . '">';
-        } elseif (strpos($card_family_lower, 'cardfinans') !== false) {
-            return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Cardfinans.png" alt="' . esc_attr($card_family) . '" class="bank-logo" title="' . esc_attr($card_family) . '">';
-        } elseif (strpos($card_family_lower, 'advantage') !== false) {
-            return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Advantage.png" alt="' . esc_attr($card_family) . '" class="bank-logo" title="' . esc_attr($card_family) . '">';
-        } elseif (strpos($card_family_lower, 'world') !== false) {
-            return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/World.png" alt="' . esc_attr($card_family) . '" class="bank-logo" title="' . esc_attr($card_family) . '">';
-        } elseif (strpos($card_family_lower, 'sağlam') !== false || strpos($card_family_lower, 'saglam') !== false) {
-            return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/SaglamKart.png" alt="' . esc_attr($card_family) . '" class="bank-logo" title="' . esc_attr($card_family) . '">';
-        } elseif (strpos($card_family_lower, 'combo') !== false) {
-            return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/BankkartCombo.png" alt="' . esc_attr($card_family) . '" class="bank-logo" title="' . esc_attr($card_family) . '">';
-        } elseif (strpos($card_family_lower, 'qnb') !== false || strpos($card_family_lower, 'cc') !== false) {
-            return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/QNB-CC.png" alt="' . esc_attr($card_family) . '" class="bank-logo" title="' . esc_attr($card_family) . '">';
-        } else {
-            return '<div class="bank-logo-default" title="' . esc_attr($card_family) . '">💳</div>';
-        }
-    }
+		ob_start();
+		?>
+		<div class="iyzico-installment-container">
+			<h3 class="iyzico-installment-title">
+				<?php echo esc_html__( 'INSTALLMENT_OPTIONS', 'iyzico-installment' ); ?>
+			</h3>
 
-    /**
-     * Add custom CSS to the frontend if provided
-     */
-    private function add_custom_css()
-    {
-        $custom_css = $this->settings->get_custom_css();
-        
-        if (!empty($custom_css)) {
-            // Sanitize CSS for security - Remove dangerous elements
-            $custom_css = wp_strip_all_tags($custom_css);
-            $custom_css = str_replace(array(
-                '<script', '</script', 'javascript:', 'expression(', 'eval(', 
-                'onclick=', 'onload=', 'onerror=', 'onmouseover=', '@import',
-                'behavior:', '-moz-binding:', 'vbscript:', 'mocha:', 'livescript:'
-            ), '', $custom_css);
-            
-            // Only allow if it contains basic CSS properties
-            if (preg_match('/[{;}]/', $custom_css) && !preg_match('/<[^>]*>/', $custom_css)) {
-                // Add CSS to page with a unique handle to prevent conflicts
-                wp_add_inline_style('iyzico-installment', $custom_css);
-            }
-        }
-    }
+			<div class="iyzico-bank-grid">
+				<?php foreach ( $installment_info['installmentDetails'] as $bank ) : ?>
+					<div class="iyzico-bank-card"
+						tabindex="0"
+						aria-label="<?php echo esc_attr( $bank['bankName'] . ' - ' . $bank['cardFamilyName'] ); ?>">
+						<div class="iyzico-bank-logo-top">
+							<?php
+							echo $this->_getBankLogo( $bank['bankName'], $bank['cardFamilyName'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							?>
+						</div>
+
+						<div class="table-area">
+							<table class="iyzico-installment-table"
+									role="table"
+									aria-label="<?php echo esc_attr( $bank['bankName'] ); ?> taksit tablosu">
+								<thead>
+									<tr>
+										<th>
+											<?php echo esc_html__( 'INSTALLMENT_COUNT', 'iyzico-installment' ); ?>
+										</th>
+										<th class="amount">
+											<?php echo esc_html__( 'INSTALLMENT_AMOUNT', 'iyzico-installment' ); ?>
+										</th>
+										<th class="amount total">
+											<?php echo esc_html__( 'TOTAL', 'iyzico-installment' ); ?>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach ( $bank['installmentPrices'] as $installment ) : ?>
+										<tr>
+											<td><?php echo esc_html( $installment['installmentNumber'] ); ?></td>
+											<td class="amount">
+												<?php echo wp_kses_post( wc_price( $installment['installmentPrice'] ) ); ?>
+											</td>
+											<td class="amount total">
+												<?php echo wp_kses_post( wc_price( $installment['totalPrice'] ) ); ?>
+											</td>
+										</tr>
+									<?php endforeach; ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Get bank logo HTML
+	 *
+	 * @param string $bank_name   Bank name.
+	 * @param string $card_family Card family name.
+	 *
+	 * @return string
+	 */
+	private function _getBankLogo( $bank_name, $card_family ) {
+		$card_family_lower = strtolower( trim( $card_family ) );
+		if ( strpos( $card_family_lower, 'bonus' ) !== false ) {
+			return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Bonus.png"
+                    alt="' . esc_attr( $card_family ) . '"
+                    class="bank-logo"
+                    title="' . esc_attr( $card_family ) . '">';
+		} elseif ( strpos( $card_family_lower, 'axess' ) !== false ) {
+			return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Axess.png"
+                    alt="' . esc_attr( $card_family ) . '"
+                    class="bank-logo"
+                    title="' . esc_attr( $card_family ) . '">';
+		} elseif ( strpos( $card_family_lower, 'maximum' ) !== false ) {
+			return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Maximum.png"
+                    alt="' . esc_attr( $card_family ) . '"
+                    class="bank-logo"
+                    title="' . esc_attr( $card_family ) . '">';
+		} elseif ( strpos( $card_family_lower, 'paraf' ) !== false ) {
+			return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Paraf.png"
+                    alt="' . esc_attr( $card_family ) . '"
+                    class="bank-logo"
+                    title="' . esc_attr( $card_family ) . '">';
+		} elseif ( strpos( $card_family_lower, 'cardfinans' ) !== false ) {
+			return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Cardfinans.png"
+                    alt="' . esc_attr( $card_family ) . '"
+                    class="bank-logo"
+                    title="' . esc_attr( $card_family ) . '">';
+		} elseif ( strpos( $card_family_lower, 'advantage' ) !== false ) {
+			return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/Advantage.png"
+                    alt="' . esc_attr( $card_family ) . '"
+                    class="bank-logo"
+                    title="' . esc_attr( $card_family ) . '">';
+		} elseif ( strpos( $card_family_lower, 'world' ) !== false ) {
+			return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/World.png"
+                    alt="' . esc_attr( $card_family ) . '"
+                    class="bank-logo"
+                    title="' . esc_attr( $card_family ) . '">';
+		} elseif ( strpos( $card_family_lower, 'sağlam' ) !== false
+			|| strpos( $card_family_lower, 'saglam' ) !== false
+		) {
+			return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/SaglamKart.png"
+                    alt="' . esc_attr( $card_family ) . '"
+                    class="bank-logo"
+                    title="' . esc_attr( $card_family ) . '">';
+		} elseif ( strpos( $card_family_lower, 'combo' ) !== false ) {
+			return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/BankkartCombo.png"
+                    alt="' . esc_attr( $card_family ) . '"
+                    class="bank-logo"
+                    title="' . esc_attr( $card_family ) . '">';
+		} elseif ( strpos( $card_family_lower, 'qnb' ) !== false
+			|| strpos( $card_family_lower, 'cc' ) !== false
+		) {
+			return '<img src="' . IYZI_INSTALLMENT_ASSETS_URL . '/images/QNB-CC.png"
+                    alt="' . esc_attr( $card_family ) . '"
+                    class="bank-logo"
+                    title="' . esc_attr( $card_family ) . '">';
+		} else {
+			return '<div class="bank-logo-default" title="' . esc_attr( $card_family ) . '">💳</div>';
+		}
+	}
+
+	/**
+	 * Add custom CSS to the frontend if provided
+	 *
+	 * @return void
+	 */
+	private function _addCustomCss() {
+		$custom_css = $this->_settings->getCustomCss();
+
+		if ( ! empty( $custom_css ) ) {
+			// Sanitize CSS for security - Remove dangerous elements
+			$custom_css = wp_strip_all_tags( $custom_css );
+			$custom_css = str_replace(
+				array(
+					'<script',
+					'</script',
+					'javascript:',
+					'expression(',
+					'eval(',
+					'onclick=',
+					'onload=',
+					'onerror=',
+					'onmouseover=',
+					'@import',
+					'behavior:',
+					'-moz-binding:',
+					'vbscript:',
+					'mocha:',
+					'livescript:',
+				),
+				'',
+				$custom_css
+			);
+
+			// Only allow if it contains basic CSS properties
+			if ( preg_match( '/[{;}]/', $custom_css ) && ! preg_match( '/<[^>]*>/', $custom_css ) ) {
+				// Add CSS to page with a unique handle to prevent conflicts
+				wp_add_inline_style( 'iyzico-installment', $custom_css );
+			}
+		}
+	}
 }
