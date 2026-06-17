@@ -2,7 +2,7 @@
 Contributors: iyzico, tarikkamat, ta2edh
 Tags: iyzico, woocommerce, installment, product-page
 Tested up to: 6.8
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 Requires at least: 6.6
 Requires PHP: 7.4.33
 License: GPL v2 or later
@@ -82,6 +82,14 @@ The plugin is compatible with WooCommerce 9.0.0 and higher versions.
 
 Real-time calculation is done using iyzico's installment calculation engine.
 
+**= Does it work with Composite (bundled) products? =**
+
+Yes. For WooCommerce Composite Products, enable "Dynamic Installments" in the plugin settings and add the [dynamic_iyzico_installment] shortcode to the product. The installment table updates live as the customer configures the composite and its total price changes.
+
+**= Which VAT/KDV rate is used? =**
+
+When VAT is enabled, each product's rate is read from its WooCommerce tax class (e.g. standard 20%, reduced 10%/1%). If WooCommerce taxes are disabled or no rate is set, the global VAT rate from the plugin settings is used.
+
 **= Can I get support? =**
 
 Yes, you can contact iyzico customer service for technical support.
@@ -92,6 +100,12 @@ Yes, you can contact iyzico customer service for technical support.
 2. Admin panel - Plugin settings
 
 == Changelog ==
+
+= 1.2.0 =
+* Responsive bank logos - logos now scale correctly on mobile and no longer overflow
+* Front-end stylesheet is now loaded automatically (custom CSS now applies reliably)
+* Per-product VAT - VAT is calculated from each product's WooCommerce tax class (global rate used as fallback)
+* WooCommerce Composite Products support - installment table updates live as the customer configures the composite
 
 = 1.1.0 =
 * Dynamic installment system - Real-time installment updates for variable products
@@ -107,6 +121,9 @@ Yes, you can contact iyzico customer service for technical support.
 * Responsive design
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Responsive mobile logos, per-product VAT (tax class based) and WooCommerce Composite Products support. For composite products, place the [dynamic_iyzico_installment] shortcode on the product and enable Dynamic Installments.
 
 = 1.1.0 =
 Major feature update! Dynamic installment system and customization options added. Update is highly recommended.

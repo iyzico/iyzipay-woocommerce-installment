@@ -2,7 +2,7 @@
 /**
  * Plugin Name: iyzico Installment
  * Description: iyzico Installment for WooCommerce.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Requires at least: 6.6
  * WC requires at least: 9.3.3
  * Requires PHP: 7.4.33
@@ -18,7 +18,7 @@
  * @package    Iyzico_Installment
  * @author     iyzico <support@iyzico.com>
  * @license    GPLv2 or later
- * @version    1.1.0
+ * @version    1.2.0
  * @link       https://iyzico.com
  * @phpversion 7.4.33
  *
@@ -33,7 +33,7 @@ if (! defined('ABSPATH') ) {
 }
 
 // Plugin Constants
-define('IYZI_INSTALLMENT_VERSION', '1.1.0');
+define('IYZI_INSTALLMENT_VERSION', '1.2.0');
 define('IYZI_INSTALLMENT_FILE', __FILE__);
 define('IYZI_INSTALLMENT_PATH', plugin_dir_path(__FILE__));
 define('IYZI_INSTALLMENT_URL', plugin_dir_url(__FILE__));

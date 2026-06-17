@@ -41,6 +41,10 @@ class Iyzico_Installment_Frontend {
 
 		add_shortcode( 'iyzico_installment', array( $this, 'renderShortcode' ) );
 
+		// Always enqueue the base stylesheet (and any custom CSS) wherever the
+		// installment widget can appear, regardless of integration type.
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueStyles' ) );
+
 		// Add hooks for direct integration
 		if ( $this->_settings->showProductTabs() ) {
 			add_filter(
@@ -52,6 +56,53 @@ class Iyzico_Installment_Frontend {
 				array( $this, 'enqueueScripts' )
 			);
 		}
+	}
+
+	/**
+	 * Enqueue the front-end stylesheet (and custom CSS) on pages where the
+	 * installment widget can be displayed.
+	 *
+	 * Registering the style under the 'iyzico-installment' handle also makes the
+	 * wp_add_inline_style() custom CSS attach correctly (previously it targeted a
+	 * script handle and was silently dropped).
+	 *
+	 * @return void
+	 */
+	public function enqueueStyles() {
+		if ( ! $this->_shouldLoadStyles() ) {
+			return;
+		}
+
+		wp_enqueue_style(
+			'iyzico-installment',
+			IYZI_INSTALLMENT_URL . 'style.css',
+			array(),
+			IYZI_INSTALLMENT_VERSION
+		);
+
+		// Attach admin-provided custom CSS on top of the base stylesheet.
+		$this->_addCustomCss();
+	}
+
+	/**
+	 * Determine whether the front-end stylesheet should load on this request.
+	 *
+	 * @return bool
+	 */
+	private function _shouldLoadStyles() {
+		if ( is_product() ) {
+			return true;
+		}
+
+		global $post;
+		if ( is_a( $post, 'WP_Post' )
+			&& ( has_shortcode( $post->post_content, 'iyzico_installment' )
+				|| has_shortcode( $post->post_content, 'dynamic_iyzico_installment' ) )
+		) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -87,9 +138,6 @@ class Iyzico_Installment_Frontend {
 				'assetsUrl'       => IYZI_INSTALLMENT_ASSETS_URL,
 			)
 		);
-
-		// Add custom CSS if provided
-		$this->_addCustomCss();
 	}
 
 	/**
@@ -117,19 +165,34 @@ class Iyzico_Installment_Frontend {
 	}
 
 	/**
-	 * Get product price
+	 * Get the current product on a product page.
 	 *
-	 * @return float
+	 * @return WC_Product|null
 	 */
-	private function _getProductPrice() {
+	private function _getCurrentProduct() {
 		if ( ! is_product() ) {
-			return 0;
+			return null;
 		}
 
 		global $post;
 		$product = wc_get_product( $post );
 
 		if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+			return null;
+		}
+
+		return $product;
+	}
+
+	/**
+	 * Get product price
+	 *
+	 * @return float
+	 */
+	private function _getProductPrice() {
+		$product = $this->_getCurrentProduct();
+
+		if ( ! $product ) {
 			return 0;
 		}
 
@@ -164,8 +227,12 @@ class Iyzico_Installment_Frontend {
 			return '<p>' . esc_html__( 'VALID_PRICE_NOT_SPECIFIED', 'iyzico-installment' ) . '</p>';
 		}
 
-		// Apply VAT if enabled
-		$price = $this->_settings->calculatePriceWithVat( $price );
+		// Apply VAT if enabled. When rendered on a product page, use that
+		// product's own tax-class rate; otherwise fall back to the global rate.
+		$product = $this->_getCurrentProduct();
+		$price   = $product
+			? $this->_settings->calculatePriceWithVatForProduct( $price, $product )
+			: $this->_settings->calculatePriceWithVat( $price );
 
 		$installment_info = $this->_api->getInstallmentInfo( $price, $bin );
 
@@ -196,8 +263,16 @@ class Iyzico_Installment_Frontend {
 			)
 		);
 
-		// Add custom CSS if provided
-		$this->_addCustomCss();
+		// Ensure the base stylesheet is present so custom CSS can attach to it.
+		if ( ! wp_style_is( 'iyzico-installment', 'enqueued' ) ) {
+			wp_enqueue_style(
+				'iyzico-installment',
+				IYZI_INSTALLMENT_URL . 'style.css',
+				array(),
+				IYZI_INSTALLMENT_VERSION
+			);
+			$this->_addCustomCss();
+		}
 
 		return $this->_renderInstallmentTable( $installment_info );
 	}
@@ -234,10 +309,11 @@ class Iyzico_Installment_Frontend {
 	 * @return void
 	 */
 	public function renderInstallmentTab() {
-		$price = $this->_getProductPrice();
+		$product = $this->_getCurrentProduct();
+		$price   = $product ? $product->get_price() : 0;
 
-		// Apply VAT if enabled
-		$price = $this->_settings->calculatePriceWithVat( $price );
+		// Apply VAT if enabled, using the product's own tax-class rate.
+		$price = $this->_settings->calculatePriceWithVatForProduct( $price, $product );
 
 		$installment_info = $this->_api->getInstallmentInfo( $price );
 
