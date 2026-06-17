@@ -151,6 +151,10 @@ class Iyzico_Installment_Dynamic {
 				}
 
 				function loadPrice() {
+					if (!$('.dynamic-iyzico-installment').length) {
+						return;
+					}
+
 					var isVariableProduct = $('form.variations_form').length > 0;
 					var isComposite = window.installment_ajax.is_composite || $('.composite_form, .composite_data').length > 0;
 
