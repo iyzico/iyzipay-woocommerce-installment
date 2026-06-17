@@ -78,8 +78,8 @@
 .iyzico-bank-logo-top .bank-logo {
   max-height: 40px;
   max-width: 100%;
-  height: auto;
   width: auto;
+  height: auto;
   object-fit: contain;
   display: block;
 }
@@ -240,10 +240,6 @@
     grid-template-columns: 1fr;
   }
 
-  .iyzico-bank-logo-top {
-    padding: 10px 8px;
-  }
-
   .iyzico-installment-table {
     font-size: 14px;
   }
@@ -259,8 +255,15 @@
     font-size: 13px;
   }
 
+  .iyzico-bank-logo-top {
+    padding: 8px 6px;
+  }
+
+  .iyzico-bank-logo-top img,
+  .iyzico-bank-logo-top .bank-logo,
   .bank-logo {
-    max-height: 40px;
+    max-height: 30px;
+    max-width: 100%;
   }
 
   .dynamic-iyzico-installment table th {
@@ -297,8 +300,20 @@
     font-size: 12px;
   }
 
-  .iyzico-bank-logo-top img {
-    max-height: 34px;
+  .iyzico-bank-logo-top {
+    padding: 6px 6px;
+  }
+
+  .iyzico-bank-logo-top img,
+  .iyzico-bank-logo-top .bank-logo,
+  .bank-logo {
+    max-height: 26px;
+    max-width: 100%;
+  }
+
+  .dynamic-iyzico-installment img {
+    max-height: 26px !important;
+    max-width: 100px !important;
   }
 
   .dynamic-iyzico-installment table th {

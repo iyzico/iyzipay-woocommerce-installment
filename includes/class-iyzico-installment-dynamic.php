@@ -67,32 +67,6 @@ class Iyzico_Installment_Dynamic {
 			'wp_footer',
 			array( $this, 'addFooterScript' )
 		);
-		add_action(
-			'wp_head',
-			array( $this, 'addInstallmentStyles' )
-		);
-	}
-
-	/**
-	 * Add installment styles to the head
-	 *
-	 * @return void
-	 */
-	public function addInstallmentStyles() {
-		if ( is_product() ) {
-			?>
-			<style>
-				<?php
-				// Add custom CSS if available
-				$custom_css = $this->_settings->getCustomCss();
-				if ( ! empty( $custom_css ) ) {
-					// Comprehensive CSS sanitization
-					echo $this->_sanitizeCss( $custom_css ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				}
-				?>
-			</style>
-			<?php
-		}
 	}
 
 	/**
@@ -104,10 +78,14 @@ class Iyzico_Installment_Dynamic {
 		if ( is_product() ) {
 			global $product;
 			$current_product_id = $product->get_id();
-			$current_price      = $product->get_price();
+			$current_price      = (float) $product->get_price();
+			$is_composite       = $product->is_type( 'composite' );
 
-			// Apply VAT if enabled
-			$price_with_vat = $this->_settings->calculatePriceWithVat( $current_price );
+			// Effective per-product VAT rate (product tax class, global fallback).
+			$vat_rate = $this->_settings->getProductVatRate( $product );
+
+			// Apply VAT if enabled, using the product's own tax-class rate.
+			$price_with_vat = $this->_settings->calculatePriceWithVatForProduct( $current_price, $product );
 			?>
 			<script type="text/javascript">
 			window.installment_ajax = {
@@ -117,7 +95,8 @@ class Iyzico_Installment_Dynamic {
 				server_price: <?php echo floatval( $current_price ); ?>,
 				price_with_vat: <?php echo floatval( $price_with_vat ); ?>,
 				vat_enabled: <?php echo $this->_settings->isVatEnabled() ? 'true' : 'false'; ?>,
-				vat_rate: <?php echo floatval( $this->_settings->getVatRate() ); ?>,
+				vat_rate: <?php echo floatval( $vat_rate ); ?>,
+				is_composite: <?php echo $is_composite ? 'true' : 'false'; ?>,
 				debug: <?php echo ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? 'true' : 'false'; ?>
 			};
 			
@@ -150,13 +129,9 @@ class Iyzico_Installment_Dynamic {
 					debugLog('Variation price:', variation.display_price);
 					
 					if (variation && variation.display_price) {
-						var finalPrice = variation.display_price;
-						
-						// Apply VAT if enabled
-						if (window.installment_ajax.vat_enabled) {
-							finalPrice = finalPrice * (1 + (window.installment_ajax.vat_rate / 100));
-						}
-						
+						// Apply VAT if enabled (per-product rate).
+						var finalPrice = applyVat(variation.display_price);
+
 						debugLog('Final price with VAT:', finalPrice);
 						loadInstallments(finalPrice);
 					}
@@ -167,22 +142,127 @@ class Iyzico_Installment_Dynamic {
 					$('.dynamic-iyzico-installment').html('<p><?php echo esc_js( __( 'PLEASE_SELECT_OPTION', 'iyzico-installment' ) ); ?></p>');
 				});
 
+				// Apply the (per-product) VAT rate when enabled.
+				function applyVat(price) {
+					if (window.installment_ajax.vat_enabled) {
+						return price * (1 + (window.installment_ajax.vat_rate / 100));
+					}
+					return price;
+				}
+
 				function loadPrice() {
+					if (!$('.dynamic-iyzico-installment').length) {
+						return;
+					}
+
 					var isVariableProduct = $('form.variations_form').length > 0;
-					
+					var isComposite = window.installment_ajax.is_composite || $('.composite_form, .composite_data').length > 0;
+
+					if (isComposite) {
+						debugLog('=== COMPOSITE PRODUCT ===');
+						$('.dynamic-iyzico-installment').html('<p><?php echo esc_js( __( 'PLEASE_SELECT_OPTION', 'iyzico-installment' ) ); ?></p>');
+						initComposite();
+						return;
+					}
+
 					if (isVariableProduct) {
 						$('.dynamic-iyzico-installment').html('<p><?php echo esc_js( __( 'PLEASE_SELECT_OPTION', 'iyzico-installment' ) ); ?></p>');
 						return;
 					}
-					
+
 					var price = window.installment_ajax.price_with_vat;
 					debugLog('Using price with VAT:', price);
-					
+
 					if (price > 0) {
 						loadInstallments(price);
 					} else {
 						$('.dynamic-iyzico-installment').html('<p><?php echo esc_js( __( 'PRICE_INFO_NOT_FOUND', 'iyzico-installment' ) ); ?></p>');
 					}
+				}
+
+				// ---- Composite Products (WooCommerce Composite Products) support ----
+				// Composite products have no single fixed price; the running total
+				// changes as the customer configures components. We watch the
+				// composite total and refresh the installment table accordingly.
+				var compositeDebounce = null;
+
+				function parsePriceText(text) {
+					if (!text) {
+						return 0;
+					}
+					var s = String(text).replace(/[^0-9.,]/g, '');
+					if (!s) {
+						return 0;
+					}
+					var dec = Math.max(s.lastIndexOf(','), s.lastIndexOf('.'));
+					if (dec === -1) {
+						return parseFloat(s) || 0;
+					}
+					var intPart = s.slice(0, dec).replace(/[.,]/g, '');
+					var fracPart = s.slice(dec + 1).replace(/[.,]/g, '');
+					return parseFloat(intPart + '.' + fracPart) || 0;
+				}
+
+				function getCompositeTotal() {
+					var $price = $('.composite_price').first();
+					if (!$price.length) {
+						$price = $('.cp_price_container').first();
+					}
+					if (!$price.length) {
+						return 0;
+					}
+					// When components are unselected the total can be shown as a
+					// range (multiple amounts); use the last/highest as the total.
+					var $amounts = $price.find('.woocommerce-Price-amount, .amount');
+					var text = $amounts.length ? $amounts.last().text() : $price.text();
+					return parsePriceText(text);
+				}
+
+				function updateComposite() {
+					var raw = getCompositeTotal();
+					debugLog('Composite total:', raw);
+					if (raw > 0) {
+						loadInstallments(applyVat(raw));
+					} else {
+						$('.dynamic-iyzico-installment').html('<p><?php echo esc_js( __( 'PLEASE_SELECT_OPTION', 'iyzico-installment' ) ); ?></p>');
+					}
+				}
+
+				function scheduleCompositeUpdate() {
+					if (compositeDebounce) {
+						clearTimeout(compositeDebounce);
+					}
+					// Debounce to avoid hammering the AJAX endpoint (rate limited).
+					compositeDebounce = setTimeout(updateComposite, 350);
+				}
+
+				function initComposite() {
+					var $form = $('.composite_form').first();
+
+					// Known Composite Products jQuery events (names can vary by
+					// version, so we also fall back to a DOM observer below).
+					$form.on(
+						'wc-composite-initializing wc-composite-component-loading ' +
+						'wc-composite-component-selection-changed ' +
+						'wc-composite-component-quantity-changed ' +
+						'wc-composite-show-component wc-composite-hide-component',
+						function() {
+							scheduleCompositeUpdate();
+						}
+					);
+
+					// Fallback: observe the composite total element for any change.
+					var priceNode = document.querySelector('.composite_price')
+						|| document.querySelector('.cp_price_container');
+					if (priceNode && typeof MutationObserver !== 'undefined') {
+						var observer = new MutationObserver(function() {
+							scheduleCompositeUpdate();
+						});
+						observer.observe(priceNode, { childList: true, subtree: true, characterData: true });
+					}
+
+					// Initial read once the composite has had a chance to render.
+					scheduleCompositeUpdate();
 				}
 
 				function loadInstallments(price) {
@@ -356,79 +436,6 @@ class Iyzico_Installment_Dynamic {
 
 		// Increment request counter
 		set_transient( $transient_key, ( $requests + 1 ), 60 ); // 1 minute
-	}
-
-	/**
-	 * Comprehensive CSS sanitization
-	 * Removes potentially dangerous CSS constructs
-	 *
-	 * @param string $css CSS to sanitize.
-	 *
-	 * @return string
-	 */
-	private function _sanitizeCss( $css ) {
-		// Remove all HTML tags first
-		$css = wp_strip_all_tags( $css );
-
-		// Define dangerous patterns
-		$dangerous_patterns = array(
-			// JavaScript related
-			'javascript:',
-			'expression(',
-			'eval(',
-			'vbscript:',
-			'mocha:',
-			'livescript:',
-			// Event handlers
-			'onclick=',
-			'onload=',
-			'onerror=',
-			'onmouseover=',
-			'onfocus=',
-			'onblur=',
-			// Imports and bindings
-			'@import',
-			'behavior:',
-			'-moz-binding:',
-			'binding:',
-			// Data URLs and other protocols
-			'data:',
-			'url(javascript:',
-			'url(data:',
-			'url(vbscript:',
-			// Script tags
-			'<script',
-			'</script',
-			'<style',
-			'</style',
-		);
-
-		// Remove dangerous patterns (case insensitive)
-		$css = str_ireplace( $dangerous_patterns, '', $css );
-
-		// Additional security: only allow alphanumeric, CSS-safe characters
-		if ( ! preg_match( '/^[a-zA-Z0-9\s\.\#\-_:;{}(),\[\]"%\/\*\+>~=!@]*$/', $css ) ) {
-			if ( function_exists( 'wc_get_logger' ) ) {
-				$logger = wc_get_logger();
-				$logger->warning(
-					'CSS sanitization failed: Invalid characters detected',
-					array( 'source' => 'iyzico-installment' )
-				);
-			}
-			return '';
-		}
-
-		// Validate that it looks like CSS (has selectors and declarations)
-		if ( ! preg_match( '/[{;}]/', $css ) ) {
-			return '';
-		}
-
-		// Final HTML tag check (double safety)
-		if ( preg_match( '/<[^>]*>/', $css ) ) {
-			return '';
-		}
-
-		return $css;
 	}
 
 	/**

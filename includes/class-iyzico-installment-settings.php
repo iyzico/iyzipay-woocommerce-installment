@@ -228,6 +228,54 @@ class Iyzico_Installment_Settings {
 	}
 
 	/**
+	 * Get the effective VAT rate (percent) for a specific product.
+	 *
+	 * Reads the product's WooCommerce tax class so each product can use its own
+	 * KDV rate (standard, reduced, etc.). Falls back to the global rate when
+	 * WooCommerce taxes are disabled or no rate is configured for the class.
+	 *
+	 * @param WC_Product $product Product instance.
+	 *
+	 * @return float
+	 */
+	public function getProductVatRate( $product ) {
+		if ( $product instanceof WC_Product
+			&& function_exists( 'wc_tax_enabled' )
+			&& wc_tax_enabled()
+			&& class_exists( 'WC_Tax' )
+		) {
+			$rates = WC_Tax::get_rates( $product->get_tax_class() );
+			if ( ! empty( $rates ) ) {
+				$rate = array_sum( wp_list_pluck( $rates, 'rate' ) );
+				return floatval( $rate );
+			}
+		}
+
+		// Fallback to the global VAT rate.
+		return $this->getVatRate();
+	}
+
+	/**
+	 * Calculate price with VAT for a specific product.
+	 *
+	 * Uses the product's own tax-class rate when VAT is enabled, falling back to
+	 * the global rate. When VAT is disabled the price is returned unchanged.
+	 *
+	 * @param float      $price   Base price.
+	 * @param WC_Product $product Product instance.
+	 *
+	 * @return float
+	 */
+	public function calculatePriceWithVatForProduct( $price, $product ) {
+		if ( ! $this->isVatEnabled() ) {
+			return $price;
+		}
+
+		$vat_rate = $this->getProductVatRate( $product );
+		return $price * ( 1 + ( $vat_rate / 100 ) );
+	}
+
+	/**
 	 * Get custom CSS
 	 *
 	 * @return string
