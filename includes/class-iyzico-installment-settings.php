@@ -247,9 +247,7 @@ class Iyzico_Installment_Settings {
 			$rates = WC_Tax::get_rates( $product->get_tax_class() );
 			if ( ! empty( $rates ) ) {
 				$rate = array_sum( wp_list_pluck( $rates, 'rate' ) );
-				if ( $rate > 0 ) {
-					return floatval( $rate );
-				}
+				return floatval( $rate );
 			}
 		}
 
