@@ -2,7 +2,7 @@
 Contributors: iyzico, tarikkamat, ta2edh
 Tags: iyzico, woocommerce, installment, product-page
 Tested up to: 6.8
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 Requires at least: 6.6
 Requires PHP: 7.4.33
 License: GPL v2 or later
@@ -21,6 +21,9 @@ The iyzico Installment plugin displays installment options to your customers on 
 * Custom CSS addition from admin interface
 * iyzico installment calculation integration
 * Automatic integration with WooCommerce product pages
+* Category-based installment control (enable/disable per product category)
+* Brand-based installment control (enable/disable per product brand)
+* Per-product override (force installment on/off for an individual product)
 * Responsive design
 
 **What It Does:**
@@ -39,6 +42,11 @@ This plugin only displays installment information on product pages. It does not 
 **Usage:**
 
 After plugin installation, installment options are automatically displayed on all WooCommerce product pages. Customers can see the product price and available installment options.
+
+You can further refine where installment options appear:
+
+* From **iyzico Installment** settings, enable or disable installment display for specific product categories or brands.
+* From the product edit screen, force installment display on or off for an individual product — this override always takes priority over the category/brand rule.
 
 == Installation ==
 
@@ -72,7 +80,7 @@ No, this plugin only displays installment options on product pages. It does not 
 
 **= On which pages are installment options visible? =**
 
-Automatically visible on all WooCommerce product pages.
+Automatically visible on all WooCommerce product pages, unless restricted via the category/brand rules or a per-product override.
 
 **= What is the WooCommerce compatibility? =**
 
@@ -90,6 +98,14 @@ Yes. For WooCommerce Composite Products, enable "Dynamic Installments" in the pl
 
 When VAT is enabled, each product's rate is read from its WooCommerce tax class (e.g. standard 20%, reduced 10%/1%). If WooCommerce taxes are disabled or no rate is set, the global VAT rate from the plugin settings is used.
 
+**= Can I control installment display per category or brand? =**
+
+Yes. In the plugin's settings page, you can choose specific product categories or brands (WooCommerce's native Brands taxonomy) to explicitly enable or disable installment display for. If a category/brand isn't listed, installment display follows the default (enabled) behavior.
+
+**= Can I override the rule for a single product? =**
+
+Yes. On the product edit screen, under the General tab, you'll find an "Installment Management" option with three choices: Default, Enable, or Disable. This per-product setting always takes priority over any category/brand rule.
+
 **= Can I get support? =**
 
 Yes, you can contact iyzico customer service for technical support.
@@ -98,8 +114,18 @@ Yes, you can contact iyzico customer service for technical support.
 
 1. Product page - Installment options
 2. Admin panel - Plugin settings
+3. Admin panel - Category/brand installment rules
+4. Product edit screen - Per-product installment override
 
 == Changelog ==
+
+= 1.3.0 =
+* Category-based installment control - enable/disable installment display per product category
+* Brand-based installment control - enable/disable installment display per product brand (WooCommerce native Brands)
+* Per-product override - force installment on/off for an individual product, overriding the category/brand rule
+* Rule priority: product override > category/brand rule > default (enabled)
+* Applies consistently across the product tab, the [iyzico_installment] shortcode, and the dynamic installment AJAX endpoint
+* New settings UI: WooCommerce-style Select2 category/brand pickers on the plugin settings page
 
 = 1.2.0 =
 * Responsive bank logos - logos now scale correctly on mobile and no longer overflow
@@ -121,6 +147,9 @@ Yes, you can contact iyzico customer service for technical support.
 * Responsive design
 
 == Upgrade Notice ==
+
+= 1.3.0 =
+New: manage installment display per category, per brand, or per individual product (with per-product override taking priority). No action required for existing installs — default behavior is unchanged unless you configure new rules.
 
 = 1.2.0 =
 Responsive mobile logos, per-product VAT (tax class based) and WooCommerce Composite Products support. For composite products, place the [dynamic_iyzico_installment] shortcode on the product and enable Dynamic Installments.

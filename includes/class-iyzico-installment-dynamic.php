@@ -77,6 +77,12 @@ class Iyzico_Installment_Dynamic {
 	public function addFooterScript() {
 		if ( is_product() ) {
 			global $product;
+
+			// Category/brand/product installment rules (added feature).
+			if ( isset( $GLOBALS['iyzico_rules'] ) && ! $GLOBALS['iyzico_rules']->isEnabledForProduct( $product ) ) {
+				return;
+			}
+
 			$current_product_id = $product->get_id();
 			$current_price      = (float) $product->get_price();
 			$is_composite       = $product->is_type( 'composite' );
@@ -329,6 +335,16 @@ class Iyzico_Installment_Dynamic {
 	 * @return string
 	 */
 	public function dynamicInstallmentShortcode( $atts ) {
+		// Category/brand/product installment rules (added feature).
+		if ( is_product() && isset( $GLOBALS['iyzico_rules'] ) ) {
+			global $post;
+			$current_product = wc_get_product( $post );
+
+			if ( $current_product && ! $GLOBALS['iyzico_rules']->isEnabledForProduct( $current_product ) ) {
+				return '';
+			}
+		}
+
 		return '<div class="dynamic-iyzico-installment">' . esc_html__( 'INSTALLMENTS_LOADING', 'iyzico-installment' ) . '</div>';
 	}
 
@@ -379,6 +395,14 @@ class Iyzico_Installment_Dynamic {
 		$product = wc_get_product( $product_id );
 		if ( ! $product ) {
 			wp_send_json_error( __( 'PRODUCT_NOT_FOUND', 'iyzico-installment' ) );
+		}
+
+		// Category/brand/product installment rules (added feature).
+		// Server-side enforcement: even if a direct AJAX call bypasses the
+		// front-end script, installment data won't be served for a product
+		// where the rule says it should be disabled.
+		if ( isset( $GLOBALS['iyzico_rules'] ) && ! $GLOBALS['iyzico_rules']->isEnabledForProduct( $product ) ) {
+			wp_send_json_error( __( 'INSTALLMENT_NOT_AVAILABLE_FOR_PRODUCT', 'iyzico-installment' ) );
 		}
 
 		// Log using WooCommerce logger

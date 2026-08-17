@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2022-05-16 10:26+0000\n"
-"PO-Revision-Date: 2023-04-03 08:48+0000\n"
+"PO-Revision-Date: 2026-08-17 12:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: English (United States)\n"
 "MIME-Version: 1.0\n"
@@ -10,9 +10,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: en_US\n"
+"Language: en-US\n"
 "Report-Msgid-Bugs-To: \n"
-"X-Loco-Version: 2.6.3; wp-6.3-alpha-55617"
+"X-Loco-Version: 2.8.8; wp-7.0.4; php-8.3.6"
 
 # This file is distributed under the GNU General Public License v2 or later.
 msgid "MISSING_API_CREDENTIALS"
@@ -133,7 +133,8 @@ msgid "LIVE"
 msgstr "Live"
 
 msgid "TEST_ENV_WARNING"
-msgstr "You cannot process transactions with real cards in the test environment."
+msgstr ""
+"You cannot process transactions with real cards in the test environment."
 
 msgid "API_CONNECTION_STATUS"
 msgstr "API Connection Status"
@@ -163,7 +164,9 @@ msgid "SHORTCODE_PLUS_TAB"
 msgstr "Shortcode + Show as Tab on Product Page"
 
 msgid "WORKING_MODE_DESCRIPTION"
-msgstr "Shortcode always works. This setting determines whether to show the installment tab on the product page."
+msgstr ""
+"Shortcode always works. This setting determines whether to show the "
+"installment tab on the product page."
 
 msgid "SHORTCODE"
 msgstr "Shortcode"
@@ -172,7 +175,8 @@ msgid "COPY"
 msgstr "Copy"
 
 msgid "SHORTCODE_DESCRIPTION"
-msgstr "Add this shortcode wherever you want to display installment information."
+msgstr ""
+"Add this shortcode wherever you want to display installment information."
 
 msgid "VAT_DYNAMIC_SETTINGS"
 msgstr "VAT and Dynamic Installment Settings"
@@ -181,7 +185,9 @@ msgid "VAT_INCLUDED_PRICE"
 msgstr "Calculate Price Including VAT"
 
 msgid "VAT_INCLUDED_DESCRIPTION"
-msgstr "When this option is enabled, installment calculations are made on the price including VAT."
+msgstr ""
+"When this option is enabled, installment calculations are made on the price "
+"including VAT."
 
 msgid "VAT_RATE"
 msgstr "VAT Rate (%)"
@@ -193,13 +199,16 @@ msgid "DYNAMIC_INSTALLMENT_ACTIVE"
 msgstr "Dynamic Installment System Active"
 
 msgid "DYNAMIC_INSTALLMENT_DESCRIPTION"
-msgstr "When this option is enabled, the dynamic installment system works for variable products."
+msgstr ""
+"When this option is enabled, the dynamic installment system works for "
+"variable products."
 
 msgid "DYNAMIC_INSTALLMENT_SHORTCODE"
 msgstr "Dynamic Installment Shortcode"
 
 msgid "DYNAMIC_SHORTCODE_DESCRIPTION"
-msgstr "This shortcode is used for dynamic installment display in variable products."
+msgstr ""
+"This shortcode is used for dynamic installment display in variable products."
 
 msgid "CUSTOM_CSS_SETTINGS"
 msgstr "Custom CSS Settings"
@@ -208,7 +217,9 @@ msgid "CUSTOM_CSS_CODES"
 msgstr "Custom CSS Codes"
 
 msgid "CUSTOM_CSS_DESCRIPTION"
-msgstr "You can add CSS codes to customize the installment table appearance. These CSS codes will only be applied to iyzico installment elements."
+msgstr ""
+"You can add CSS codes to customize the installment table appearance. These "
+"CSS codes will only be applied to iyzico installment elements."
 
 msgid "EXAMPLE_CSS_CLASSES"
 msgstr "Example CSS Classes:"
@@ -233,3 +244,55 @@ msgstr "You do not have sufficient permissions."
 
 msgid "IYZICO"
 msgstr "iyzico"
+
+msgid "INSTALLMENT_OVERRIDE_LABEL"
+msgstr "Installment Management"
+
+msgid "INSTALLMENT_OVERRIDE_DEFAULT"
+msgstr "Default (Follow Category/Global Rule)"
+
+msgid "INSTALLMENT_OVERRIDE_ENABLE"
+msgstr "Enable Installment for This Product"
+
+msgid "INSTALLMENT_OVERRIDE_DISABLE"
+msgstr "Disable Installment for This Product"
+
+msgid "INSTALLMENT_OVERRIDE_DESCRIPTION"
+msgstr ""
+"Manage installment display for this product independently of the "
+"global/category rule."
+
+msgid "INSTALLMENT_RULES_SECTION_TITLE"
+msgstr "Category / Brand Installment Rules"
+
+msgid "INSTALLMENT_RULES_SECTION_DESCRIPTION"
+msgstr ""
+"Turn installment display on or off for specific categories or brands. If a "
+"product has its own override set (on the product edit screen), that setting "
+"takes precedence over the rule you set here."
+
+msgid "INSTALLMENT_RULES_BY_CATEGORY"
+msgstr "Rules by Category"
+
+msgid "INSTALLMENT_RULES_BY_BRAND"
+msgstr "Rules by Brand"
+
+msgid "INSTALLMENT_NOT_AVAILABLE_FOR_PRODUCT"
+msgstr "Installment is not available for this product."
+
+msgid "INSTALLMENT_RULES_ENABLE_LABEL"
+msgstr "Enable Installment"
+
+msgid "INSTALLMENT_RULES_DISABLE_LABEL"
+msgstr "Disable Installment"
+
+msgid "INSTALLMENT_RULES_SELECT_PLACEHOLDER_CATEGORY"
+msgstr "Select category..."
+
+msgid "INSTALLMENT_RULES_SELECT_PLACEHOLDER_BRAND"
+msgstr "Select brand..."
+
+msgid "INSTALLMENT_RULES_CONFLICT_NOTE"
+msgstr ""
+"If a category/brand is added to both lists, the \"Disable\" rule takes "
+"effect."

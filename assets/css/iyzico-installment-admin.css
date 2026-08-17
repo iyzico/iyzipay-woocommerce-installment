@@ -141,3 +141,79 @@
       max-width: 100%;
   }
 }
+
+/*
+ * Iyzico Installment - Category/Brand Rules admin styles.
+ *
+ * Scoped exclusively to the settings-page category/brand installment rule
+ * section rendered by Iyzico_Installment_Taxonomy_Rules::renderFields().
+ * Class names are prefixed with .iyzico-taxonomy- to avoid any collision
+ * with the plugin's existing admin stylesheet. The Select2 look itself
+ * comes from WooCommerce's own bundled 'wc-enhanced-select' assets — this
+ * file only handles the layout/spacing around those selects.
+ */
+
+/* Two-column layout: Category on the left, Brand on the right. */
+.iyzico-taxonomy-rules-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 32px;
+	align-items: start;
+}
+
+.iyzico-taxonomy-rule-group {
+	margin-bottom: 0;
+}
+
+.iyzico-taxonomy-group-title {
+	display: block;
+	font-weight: 700;
+	font-size: 14px;
+	margin-bottom: 10px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid #dcdcde;
+}
+
+.iyzico-taxonomy-select-row {
+	margin-bottom: 14px;
+}
+
+.iyzico-taxonomy-select-row:last-of-type {
+	margin-bottom: 6px;
+}
+
+.iyzico-taxonomy-select-label {
+	display: block;
+	margin-bottom: 4px;
+	font-weight: 600;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.iyzico-taxonomy-select-label--enable {
+	color: #2e7d32;
+}
+
+.iyzico-taxonomy-select-label--disable {
+	color: #c62828;
+}
+
+/* Controls the visible width of each Select2 box. Change max-width here
+   to make the boxes narrower/wider — no PHP edit needed. */
+.iyzico-taxonomy-select-wrap {
+	max-width: 420px;
+}
+
+/* Stack into a single column on narrower admin viewports, matching the
+   782px breakpoint used in assets/css/iyzico-installment-admin.css. */
+@media (max-width: 782px) {
+	.iyzico-taxonomy-rules-grid {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+
+	.iyzico-taxonomy-select-wrap {
+		max-width: 100%;
+	}
+}

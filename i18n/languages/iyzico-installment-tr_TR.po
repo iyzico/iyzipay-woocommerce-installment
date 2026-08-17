@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2022-05-16 10:25+0000\n"
-"PO-Revision-Date: 2023-04-03 08:49+0000\n"
+"PO-Revision-Date: 2026-08-17 12:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: Türkçe\n"
 "MIME-Version: 1.0\n"
@@ -10,9 +10,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: tr_TR\n"
+"Language: tr-TR\n"
 "Report-Msgid-Bugs-To: \n"
-"X-Loco-Version: 2.6.3; wp-6.3-alpha-55617"
+"X-Loco-Version: 2.8.8; wp-7.0.4; php-8.3.6"
 
 # This file is distributed under the GNU General Public License v2 or later.
 msgid "MISSING_API_CREDENTIALS"
@@ -163,7 +163,9 @@ msgid "SHORTCODE_PLUS_TAB"
 msgstr "Shortcode + Ürün Sayfasında Tab Olarak Göster"
 
 msgid "WORKING_MODE_DESCRIPTION"
-msgstr "Shortcode her zaman çalışır. Bu ayar ürün sayfasında taksit tabını gösterip göstermemeyi belirler."
+msgstr ""
+"Shortcode her zaman çalışır. Bu ayar ürün sayfasında taksit tabını gösterip "
+"göstermemeyi belirler."
 
 msgid "SHORTCODE"
 msgstr "Shortcode"
@@ -181,7 +183,9 @@ msgid "VAT_INCLUDED_PRICE"
 msgstr "KDV Dahil Fiyat Hesapla"
 
 msgid "VAT_INCLUDED_DESCRIPTION"
-msgstr "Bu seçenek aktif edildiğinde, taksit hesaplamaları KDV dahil fiyat üzerinden yapılır."
+msgstr ""
+"Bu seçenek aktif edildiğinde, taksit hesaplamaları KDV dahil fiyat üzerinden "
+"yapılır."
 
 msgid "VAT_RATE"
 msgstr "KDV Oranı (%)"
@@ -193,13 +197,16 @@ msgid "DYNAMIC_INSTALLMENT_ACTIVE"
 msgstr "Dinamik Taksit Sistemi Aktif"
 
 msgid "DYNAMIC_INSTALLMENT_DESCRIPTION"
-msgstr "Bu seçenek aktif edildiğinde, varyasyonlu ürünlerde dinamik taksit sistemi çalışır."
+msgstr ""
+"Bu seçenek aktif edildiğinde, varyasyonlu ürünlerde dinamik taksit sistemi "
+"çalışır."
 
 msgid "DYNAMIC_INSTALLMENT_SHORTCODE"
 msgstr "Dinamik Taksit Shortcode"
 
 msgid "DYNAMIC_SHORTCODE_DESCRIPTION"
-msgstr "Bu shortcode varyasyonlu ürünlerde dinamik taksit gösterimi için kullanılır."
+msgstr ""
+"Bu shortcode varyasyonlu ürünlerde dinamik taksit gösterimi için kullanılır."
 
 msgid "CUSTOM_CSS_SETTINGS"
 msgstr "Özel CSS Ayarları"
@@ -208,7 +215,9 @@ msgid "CUSTOM_CSS_CODES"
 msgstr "Özel CSS Kodları"
 
 msgid "CUSTOM_CSS_DESCRIPTION"
-msgstr "Taksit tablosu görünümünü özelleştirmek için CSS kodları ekleyebilirsiniz. Bu CSS kodları sadece iyzico taksit elementlerine uygulanacaktır."
+msgstr ""
+"Taksit tablosu görünümünü özelleştirmek için CSS kodları ekleyebilirsiniz. "
+"Bu CSS kodları sadece iyzico taksit elementlerine uygulanacaktır."
 
 msgid "EXAMPLE_CSS_CLASSES"
 msgstr "Örnek CSS sınıfları:"
@@ -233,3 +242,55 @@ msgstr "Yetkiniz yok."
 
 msgid "IYZICO"
 msgstr "iyzico"
+
+msgid "INSTALLMENT_OVERRIDE_LABEL"
+msgstr "Taksit Yönetimi"
+
+msgid "INSTALLMENT_OVERRIDE_DEFAULT"
+msgstr "Varsayılan (Genel/Kategori Kuralına Uy)"
+
+msgid "INSTALLMENT_OVERRIDE_ENABLE"
+msgstr "Bu Üründe Taksiti Aç"
+
+msgid "INSTALLMENT_OVERRIDE_DISABLE"
+msgstr "Bu Üründe Taksiti Kapat"
+
+msgid "INSTALLMENT_OVERRIDE_DESCRIPTION"
+msgstr ""
+"Bu ürün için taksit gösterimini genel/kategori kuralından bağımsız olarak "
+"özel yönetin."
+
+msgid "INSTALLMENT_RULES_SECTION_TITLE"
+msgstr "Kategori / Marka Bazlı Taksit Kuralları"
+
+msgid "INSTALLMENT_RULES_SECTION_DESCRIPTION"
+msgstr ""
+"Belirli kategori veya markalarda taksit gösterimini genel olarak açıp "
+"kapatabilirsiniz. Bir ürüne özel ayar yapılmışsa (ürün düzenleme ekranındaki "
+"seçenek), o ayar burada belirlediğiniz kuralı geçersiz kılar."
+
+msgid "INSTALLMENT_RULES_BY_CATEGORY"
+msgstr "Kategori Bazlı Kurallar"
+
+msgid "INSTALLMENT_RULES_BY_BRAND"
+msgstr "Marka Bazlı Kurallar"
+
+msgid "INSTALLMENT_NOT_AVAILABLE_FOR_PRODUCT"
+msgstr "Bu ürün için taksit seçeneği kullanılamıyor."
+
+msgid "INSTALLMENT_RULES_ENABLE_LABEL"
+msgstr "Taksiti Açık Yap"
+
+msgid "INSTALLMENT_RULES_DISABLE_LABEL"
+msgstr "Taksiti Kapat"
+
+msgid "INSTALLMENT_RULES_SELECT_PLACEHOLDER_CATEGORY"
+msgstr "Kategori seçin..."
+
+msgid "INSTALLMENT_RULES_SELECT_PLACEHOLDER_BRAND"
+msgstr "Marka seçin..."
+
+msgid "INSTALLMENT_RULES_CONFLICT_NOTE"
+msgstr ""
+"Bir kategori/marka her iki listeye de eklenirse, \"Kapat\" kuralı geçerli "
+"olur."
