@@ -14,6 +14,9 @@ The iyzico Installment plugin displays installment options to your customers usi
 - **iyzico API Integration**: Real-time installment calculation
 - **Multiple Integration Options**: Use as shortcode, product tab, or widget
 - **AJAX Support**: Dynamic installment calculation and updates
+- **Category-Based Installment Rules**: Enable or disable installment display for specific product categories
+- **Brand-Based Installment Rules**: Enable or disable installment display for specific product brands (WooCommerce native Brands)
+- **Per-Product Override**: Force installment display on or off for an individual product, taking priority over any category/brand rule
 - **Responsive Design**: Mobile and desktop compatible
 - **Bank Logos**: Automatic logo display by credit card families
 - **VAT Calculation**: Option to include VAT in product prices
@@ -71,6 +74,16 @@ The plugin offers three different integration types:
 - **Installment Tab Display**: Add installment tab on product pages
 - **Responsive Design**: Mobile-compatible display
 
+### 4. Category, Brand & Per-Product Installment Rules
+
+Installment display is enabled by default everywhere, but you can restrict or re-enable it at three levels, evaluated in this priority order:
+
+1. **Per-product override** (highest priority) — on the product edit screen, under the General tab, choose **Default**, **Enable**, or **Disable** for that specific product.
+2. **Category / brand rule** — on the **iyzico Installment** settings page, pick categories or brands (WooCommerce's native Brands taxonomy) to explicitly enable or disable. If a product matches rules in more than one grouping and they conflict, **Disable wins**.
+3. **Default** — if no rule applies at any level, installment display is **enabled**, matching the plugin's original behavior.
+
+This lets you do things like: enable installment for an entire category, but turn it off for one specific product inside it — or disable it for a whole category while re-enabling it for a single product. The rule is applied consistently across the product tab, the `[iyzico_installment]` shortcode, and the dynamic installment AJAX endpoint.
+
 ## 🔧 Usage
 
 ### Shortcode Usage
@@ -97,6 +110,10 @@ $installment_info = $GLOBALS['iyzico_api']->get_installment_info($product_price)
 
 // To render the shortcode
 echo do_shortcode('[iyzico_installment]'); // or [dynamic_iyzico_installment]
+
+// To check whether installment display is enabled for a given product
+// (combines per-product override + category/brand rules)
+$is_enabled = $GLOBALS['iyzico_rules']->isEnabledForProduct($product);
 ```
 
 ### Theme Integration
@@ -118,12 +135,15 @@ The plugin has a modular structure:
 iyzico-installment/
 ├── iyzico-installment.php          # Main plugin file
 ├── includes/                        # Class files
-│   ├── class-iyzico-installment-settings.php    # Settings management
-│   ├── class-iyzico-installment-api.php         # API integration
-│   ├── class-iyzico-installment-frontend.php    # Frontend operations
-│   ├── class-iyzico-installment-dynamic.php     # Dynamic installment system
-│   ├── class-iyzico-installment-logger.php      # Logging system
-│   ├── class-iyzico-installment-hpos.php        # HPOS compatibility
+│   ├── class-iyzico-installment-settings.php        # Settings management
+│   ├── class-iyzico-installment-api.php             # API integration
+│   ├── class-iyzico-installment-frontend.php        # Frontend operations
+│   ├── class-iyzico-installment-dynamic.php         # Dynamic installment system
+│   ├── class-iyzico-installment-logger.php          # Logging system
+│   ├── class-iyzico-installment-hpos.php            # HPOS compatibility
+│   ├── class-iyzico-installment-product-meta.php    # Per-product installment override
+│   ├── class-iyzico-installment-taxonomy-rules.php  # Category/brand installment rules
+│   ├── class-iyzico-installment-rules.php           # Decision engine (combines the two above)
 │   └── admin/                      # Admin panel
 ├── assets/                         # CSS, JS and images
 │   ├── css/                        # Style files
@@ -141,6 +161,9 @@ iyzico-installment/
 - **Dynamic**: Dynamic installment calculation for variable products
 - **Logger**: Error tracking and debug information
 - **HPOS**: WooCommerce High-Performance Order Storage compatibility
+- **Product_Meta**: Stores and retrieves the per-product installment override (Default/Enable/Disable)
+- **Taxonomy_Rules**: Stores and retrieves the category/brand installment rules, rendered as WooCommerce-style Select2 pickers in the settings page
+- **Rules**: The decision engine — combines the per-product override and the category/brand rule into a single "should this product show installment?" answer, used by the product tab, shortcode, and dynamic AJAX endpoint
 - **Admin**: Admin panel settings
 
 ## 🔌 API Integration
@@ -290,6 +313,7 @@ function loadInstallments(price) {
 - Ensure WooCommerce is active
 - Check if dynamic installment setting is enabled
 - Review log files
+- Check the category/brand rules and the product's own installment override — the product may be intentionally excluded
 
 **Installment not updating on variations:**
 - Check JavaScript errors (Browser Console)
@@ -327,6 +351,7 @@ The plugin uses i18n standards:
 - **API Security**: iyzico's secure API protocol
 - **WordPress Standards**: WordPress coding standards compliant
 - **Input/Output Sanitization**: Security checks on all data inputs
+- **Server-Side Rule Enforcement**: category/brand and per-product installment rules are validated on the server (including the AJAX endpoint), not just hidden in the UI
 
 ## 📊 Performance
 
@@ -353,6 +378,13 @@ This project is licensed under the [GPL v2](https://www.gnu.org/licenses/gpl-2.0
 - **GitHub Issues**: [Repository Issues](https://github.com/iyzico/iyzipay-woocommerce-installment/issues)
 
 ## 🔄 Updates
+
+### v1.3.0
+- **Category-Based Installment Rules**: Enable/disable installment display per product category
+- **Brand-Based Installment Rules**: Enable/disable installment display per product brand (WooCommerce native Brands)
+- **Per-Product Override**: Force installment display on/off for an individual product, overriding the category/brand rule
+- **Consistent Enforcement**: Rules apply across the product tab, the `[iyzico_installment]` shortcode, and the dynamic installment AJAX endpoint
+- **New Settings UI**: WooCommerce-style Select2 category/brand pickers on the plugin settings page
 
 ### v1.1.0
 - **Dynamic Installment System**: Real-time installment updates for variable products

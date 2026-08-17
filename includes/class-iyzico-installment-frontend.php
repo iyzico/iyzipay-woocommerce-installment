@@ -230,6 +230,15 @@ class Iyzico_Installment_Frontend {
 		// Apply VAT if enabled. When rendered on a product page, use that
 		// product's own tax-class rate; otherwise fall back to the global rate.
 		$product = $this->_getCurrentProduct();
+
+		// Category/brand/product installment rules (added feature).
+		// Only applies when the shortcode is rendered in a product context;
+		// if used elsewhere (a page/post with an explicit price attribute),
+		// there's no product to evaluate against, so it's left untouched.
+		if ( $product && isset( $GLOBALS['iyzico_rules'] ) && ! $GLOBALS['iyzico_rules']->isEnabledForProduct( $product ) ) {
+			return '';
+		}
+
 		$price   = $product
 			? $this->_settings->calculatePriceWithVatForProduct( $price, $product )
 			: $this->_settings->calculatePriceWithVat( $price );
@@ -292,6 +301,14 @@ class Iyzico_Installment_Frontend {
 		$price = $this->_getProductPrice();
 		if ( $price <= 0 ) {
 			return $tabs;
+		}
+
+		// Category/brand/product installment rules (added feature).
+		if ( isset( $GLOBALS['iyzico_rules'] ) ) {
+			$product = $this->_getCurrentProduct();
+			if ( $product && ! $GLOBALS['iyzico_rules']->isEnabledForProduct( $product ) ) {
+				return $tabs;
+			}
 		}
 
 		$tabs['iyzico_installment'] = array(

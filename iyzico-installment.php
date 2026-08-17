@@ -2,7 +2,7 @@
 /**
  * Plugin Name: iyzico Installment
  * Description: iyzico Installment for WooCommerce.
- * Version: 1.2.0
+ * Version: 1.3.0
  * Requires at least: 6.6
  * WC requires at least: 9.3.3
  * Requires PHP: 7.4.33
@@ -18,7 +18,7 @@
  * @package    Iyzico_Installment
  * @author     iyzico <support@iyzico.com>
  * @license    GPLv2 or later
- * @version    1.2.0
+ * @version    1.3.0
  * @link       https://iyzico.com
  * @phpversion 7.4.33
  *
@@ -33,7 +33,7 @@ if (! defined('ABSPATH') ) {
 }
 
 // Plugin Constants
-define('IYZI_INSTALLMENT_VERSION', '1.2.0');
+define('IYZI_INSTALLMENT_VERSION', '1.3.0');
 define('IYZI_INSTALLMENT_FILE', __FILE__);
 define('IYZI_INSTALLMENT_PATH', plugin_dir_path(__FILE__));
 define('IYZI_INSTALLMENT_URL', plugin_dir_url(__FILE__));
@@ -79,4 +79,21 @@ require_once IYZI_INSTALLMENT_PATH .
 $GLOBALS['iyzico_dynamic'] = new Iyzico_Installment_Dynamic(
     $GLOBALS['iyzico_settings'],
     $GLOBALS['iyzico_api']
+);
+
+// Step 8: Load Product Meta class (per-product installment override)
+require_once IYZI_INSTALLMENT_PATH . 'includes/class-iyzico-installment-product-meta.php';
+$GLOBALS['iyzico_product_meta'] = new Iyzico_Installment_Product_Meta(
+    $GLOBALS['iyzico_settings']
+);
+
+// Step 9: Load Taxonomy Rules class (category/brand installment rules)
+require_once IYZI_INSTALLMENT_PATH . 'includes/class-iyzico-installment-taxonomy-rules.php';
+$GLOBALS['iyzico_taxonomy_rules'] = new Iyzico_Installment_Taxonomy_Rules();
+
+// Step 10: Load Rules engine (combines product override + category/brand rule)
+require_once IYZI_INSTALLMENT_PATH . 'includes/class-iyzico-installment-rules.php';
+$GLOBALS['iyzico_rules'] = new Iyzico_Installment_Rules(
+    $GLOBALS['iyzico_product_meta'],
+    $GLOBALS['iyzico_taxonomy_rules']
 );

@@ -161,6 +161,48 @@ class Iyzico_Installment_Admin {
 			true
 		);
 
+		// Ensure WooCommerce's Select2 (selectWoo) assets are available on
+		// this screen even though it isn't one of WooCommerce's own
+		// recognized admin pages. WooCommerce only auto-enqueues these on
+		// screens it recognizes, so on a third-party top-level page like
+		// ours the handles may exist unregistered — register them from
+		// WooCommerce's own bundled files if needed, then enqueue.
+		if ( function_exists( 'WC' ) ) {
+			$wc_plugin_url = WC()->plugin_url();
+
+			if ( ! wp_style_is( 'select2', 'registered' ) ) {
+				wp_register_style( 'select2', $wc_plugin_url . '/assets/css/select2.css', array(), '4.0.3' );
+			}
+			wp_enqueue_style( 'select2' );
+
+			if ( ! wp_script_is( 'selectWoo', 'registered' ) ) {
+				wp_register_script( 'selectWoo', $wc_plugin_url . '/assets/js/selectWoo/selectWoo.full.min.js', array( 'jquery' ), '1.0.13', true );
+			}
+
+			if ( ! wp_script_is( 'wc-enhanced-select', 'registered' ) ) {
+				wp_register_script( 'wc-enhanced-select', $wc_plugin_url . '/assets/js/admin/wc-enhanced-select.min.js', array( 'jquery', 'selectWoo' ), IYZI_INSTALLMENT_VERSION, true );
+			}
+			wp_enqueue_script( 'wc-enhanced-select' );
+
+			wp_localize_script(
+				'wc-enhanced-select',
+				'wc_enhanced_select_params',
+				array(
+					'i18n_no_matches'           => _x( 'No matches found', 'enhanced select', 'iyzico-installment' ),
+					'i18n_ajax_error'           => _x( 'Loading failed', 'enhanced select', 'iyzico-installment' ),
+					'i18n_input_too_short_1'    => _x( 'Please enter 1 or more characters', 'enhanced select', 'iyzico-installment' ),
+					'i18n_input_too_short_n'    => _x( 'Please enter %qty% or more characters', 'enhanced select', 'iyzico-installment' ),
+					'i18n_input_too_long_1'     => _x( 'Please delete 1 character', 'enhanced select', 'iyzico-installment' ),
+					'i18n_input_too_long_n'     => _x( 'Please delete %qty% characters', 'enhanced select', 'iyzico-installment' ),
+					'i18n_selection_too_long_1' => _x( 'You can only select 1 item', 'enhanced select', 'iyzico-installment' ),
+					'i18n_selection_too_long_n' => _x( 'You can only select %qty% items', 'enhanced select', 'iyzico-installment' ),
+					'i18n_load_more'            => _x( 'Loading more results&hellip;', 'enhanced select', 'iyzico-installment' ),
+					'i18n_searching'            => _x( 'Searching&hellip;', 'enhanced select', 'iyzico-installment' ),
+					'ajax_url'                  => admin_url( 'admin-ajax.php' ),
+				)
+			);
+		}
+
 		wp_localize_script(
 			'iyzico-installment-admin',
 			'iyzicoInstallment',
@@ -389,6 +431,12 @@ class Iyzico_Installment_Admin {
 							</div>
 						</div>
 
+						<?php
+						if ( isset( $GLOBALS['iyzico_taxonomy_rules'] ) ) {
+							$GLOBALS['iyzico_taxonomy_rules']->renderFields();
+						}
+						?>
+
 						<div class="iyzico-settings-section">
 							<h2><?php echo esc_html__( 'CUSTOM_CSS_SETTINGS', 'iyzico-installment' ); ?></h2>
 							
@@ -408,7 +456,7 @@ class Iyzico_Installment_Admin {
 								</p>
 							</div>
 						</div>
-						
+
 						<?php submit_button( esc_html__( 'SAVE_SETTINGS', 'iyzico-installment' ), 'primary', 'submit', true ); ?>
 					</form>
 				</div>
